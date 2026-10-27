@@ -1,0 +1,170 @@
+.section {
+  position: relative;
+  height: calc(579 * var(--u));
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.stage {
+  height: 100%;
+}
+
+.heading {
+  position: absolute;
+  inset: 0;
+}
+
+/* "Why go" sits under "Off the Grid?" */
+.script {
+  z-index: 1;
+}
+
+.title {
+  position: absolute;
+  left: calc(86.69 * var(--u));
+  top: calc(197.33 * var(--u));
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: calc(67.86 * var(--u));
+  line-height: 1.28;
+  color: var(--white);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.eyeMobile {
+  display: none;
+}
+
+/* quotes start at x = -97 in the artboard and bleed past both edges */
+.marquee {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(341.66 * var(--u));
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  gap: calc(64 * var(--u));
+  /* start offset reproduces the Canva composition at load */
+  transform: translateX(calc(-97.19 * var(--u)));
+  animation: marquee 48s linear infinite;
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+
+.quote {
+  flex: none;
+  width: calc(370 * var(--u));
+  font-family: var(--font-body);
+  font-size: calc(29.33 * var(--u));
+  line-height: 1.12;
+  color: var(--text-soft);
+}
+
+.quote:nth-child(4n + 1) { width: calc(397.48 * var(--u)); }
+.quote:nth-child(4n + 2) { width: calc(391.9 * var(--u)); }
+.quote:nth-child(4n + 3) { width: calc(342.91 * var(--u)); }
+.quote:nth-child(4n + 4) { width: calc(342.91 * var(--u)); }
+
+.hl {
+  color: var(--purple);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(calc(-97.19 * var(--u)));
+  }
+  to {
+    /* one full set: widths (1475.2) + 4 gaps (256) */
+    transform: translateX(calc((-97.19 - 1731.2) * var(--u)));
+  }
+}
+
+@media (max-width: 900px) {
+  .section {
+    height: auto;
+    padding: 72px 0 64px;
+  }
+
+  .stage {
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .heading {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: 200px;
+  }
+
+  /* doubled class beats BrushText's own positioning */
+  .script.script {
+    left: -4px;
+    top: 0;
+    width: 100%;
+    height: 120px;
+  }
+
+  .script > * {
+    font-size: 84px;
+  }
+
+  .title {
+    left: 0;
+    top: 112px;
+    font-size: clamp(40px, 11vw, 60px);
+  }
+
+  .eyeLayer {
+    display: none;
+  }
+
+  .eyeMobile {
+    display: block;
+    width: min(80vw, 340px);
+    margin-top: 16px;
+    --u: calc(100vw / 900);
+  }
+
+  .eyeMobile img {
+    width: 100%;
+    height: auto;
+  }
+
+  .marquee {
+    position: relative;
+    top: auto;
+    margin-top: 32px;
+  }
+
+  .quote,
+  .quote:nth-child(n) {
+    width: 300px;
+    font-size: 22px;
+  }
+
+  .track {
+    gap: 40px;
+    animation-name: marquee-m;
+    animation-duration: 36s;
+  }
+
+  @keyframes marquee-m {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-1360px);
+    }
+  }
+}

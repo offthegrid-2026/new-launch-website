@@ -1,0 +1,295 @@
+.section {
+  position: relative;
+  height: calc(1025 * var(--u));
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.stage {
+  height: 100%;
+}
+
+/* Canva box: 1186.8 × 802.2 at (89.6, 109.3), r50. On desktop the box
+   art is layer 3 — this div only carries the travelling border light. */
+.card {
+  position: absolute;
+  left: calc(89.59 * var(--u));
+  top: calc(109.33 * var(--u));
+  width: calc(1186.83 * var(--u));
+  height: calc(802.23 * var(--u));
+  border-radius: calc(50 * var(--u));
+}
+
+/* layer 4 — the two soft lights on the box slowly breathe */
+.boxGlow {
+  animation: boxGlow 9s ease-in-out infinite;
+}
+
+@keyframes boxGlow {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* looping: stars pulse and shimmer once revealed */
+.starRed {
+  animation: pulseRed 6s ease-in-out 1.4s infinite;
+}
+
+.starBlue {
+  transform-origin: 70% 50%;
+  animation: pulseBlue 7s ease-in-out 1.6s infinite;
+}
+
+@keyframes pulseRed {
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    filter: brightness(1.25) saturate(1.2);
+  }
+}
+
+@keyframes pulseBlue {
+  0%,
+  100% {
+    filter: brightness(1) hue-rotate(0deg);
+    translate: 0 0;
+    rotate: 0deg;
+  }
+  50% {
+    filter: brightness(1.3) hue-rotate(-15deg);
+    translate: 0 calc(-10 * var(--u));
+    rotate: -6deg;
+  }
+}
+
+.starMobile {
+  display: none;
+}
+
+.eyebrow {
+  position: absolute;
+  top: calc(168.28 * var(--u));
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: calc(34.67 * var(--u));
+  line-height: 1.28;
+  letter-spacing: 0.062em;
+  text-transform: uppercase;
+  color: var(--sky);
+  z-index: 3;
+}
+
+/* Canva group: brush strokes + "business" text box */
+.scriptWrap {
+  position: absolute;
+  left: calc(var(--l) * var(--u));
+  top: calc(var(--t) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  z-index: 3;
+}
+
+/* strokes and word move as one so the joins never split */
+.sway {
+  position: absolute;
+  inset: 0;
+  transform-origin: 35% 60%;
+  animation: sway 7s ease-in-out 2.4s infinite;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-1deg) translateY(calc(-5 * var(--u)));
+  }
+}
+
+.strokes {
+  position: absolute;
+  left: calc(var(--sl) * var(--u));
+  top: calc(var(--st) * var(--u));
+  width: calc(var(--sw) * var(--u));
+  height: calc(var(--sh) * var(--u));
+}
+
+.word > * {
+  animation: none;
+}
+
+.subtitle {
+  position: absolute;
+  top: calc(448.14 * var(--u));
+  left: calc(397.8 * var(--u));
+  width: calc(570.4 * var(--u));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.rule {
+  display: block;
+  width: calc(67.91 * var(--u));
+  height: calc(3.16 * var(--u));
+  background: var(--indigo-line);
+}
+
+.subtitleText {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: calc(35.07 * var(--u));
+  line-height: 1.2;
+  letter-spacing: 0.367em;
+  margin-right: -0.367em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.body {
+  position: absolute;
+  top: calc(540.94 * var(--u));
+  left: calc(253.29 * var(--u));
+  width: calc(859.42 * var(--u));
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: calc(26.67 * var(--u));
+  line-height: 1.12;
+  color: var(--text-soft);
+  display: flex;
+  flex-direction: column;
+  /* the blank 18.67px lines between paragraphs in Canva */
+  gap: calc(20.9 * var(--u));
+  z-index: 3;
+}
+
+.line {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .section {
+    height: auto;
+    padding: 64px 16px;
+  }
+
+  .stage {
+    width: 100%;
+    position: relative;
+    padding: 56px 20px 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .desktopOnly {
+    display: none;
+  }
+
+  .card {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+    border: 1px solid transparent;
+    background:
+      var(--card-gradient) padding-box,
+      var(--brand-gradient) border-box;
+  }
+
+  .starMobile {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    height: auto;
+  }
+
+  .starRedMobile {
+    left: 0;
+    top: 0;
+    width: 96px;
+    border-top-left-radius: 32px;
+  }
+
+  .starBlueMobile {
+    right: 0;
+    bottom: 20px;
+    width: 64px;
+    opacity: 0.85;
+  }
+
+  /* the group keeps its Canva proportions, scaled to the card width */
+  .scriptWrap {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: calc(100% + 32px);
+    height: auto;
+    margin-inline: -16px;
+    aspect-ratio: 1147.52 / 282.94;
+    container-type: inline-size;
+  }
+
+  .sway > * {
+    --u: calc(100cqw / 1147.52);
+  }
+
+  .eyebrow,
+  .subtitle,
+  .body {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    justify-content: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .rule {
+    width: 32px;
+    height: 2px;
+    flex: none;
+  }
+
+  .subtitleText {
+    font-size: clamp(16px, 4.6vw, 26px);
+    letter-spacing: 0.3em;
+    margin-right: -0.3em;
+  }
+
+  .body {
+    margin-top: 32px;
+    font-size: 17px;
+    gap: 16px;
+  }
+
+  .line {
+    display: inline;
+  }
+
+  .line::after {
+    content: ' ';
+  }
+}

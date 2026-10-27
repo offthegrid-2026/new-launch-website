@@ -1,0 +1,46 @@
+.section {
+  position: relative;
+  /* 840 in Canva; grows if a longer answer is opened */
+  min-height: calc(840 * var(--u));
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.stage {
+  padding-top: calc(224.8 * var(--u));
+  padding-bottom: calc(102 * var(--u));
+}
+
+.list {
+  position: relative;
+  margin-left: calc(152.62 * var(--u));
+  width: calc(1061.38 * var(--u));
+}
+
+@media (max-width: 900px) {
+  .section {
+    min-height: 0;
+  }
+
+  .stage {
+    width: 100%;
+    padding: 150px 20px 72px;
+  }
+
+  /* doubled class beats BrushText's own positioning */
+  .script.script {
+    left: 0;
+    top: 30px;
+    width: 300px;
+    height: 110px;
+  }
+
+  .script > * {
+    font-size: 84px;
+  }
+
+  .list {
+    margin: 0;
+    width: 100%;
+  }
+}

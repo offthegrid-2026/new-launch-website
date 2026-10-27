@@ -1,0 +1,219 @@
+.footer {
+  position: relative;
+  height: calc(375 * var(--u));
+  background: var(--card-gradient);
+  overflow: hidden;
+}
+
+/* thin travelling light along the top edge */
+.topLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--violet), var(--amber), transparent);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: travel 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes travel {
+  from {
+    background-position: -50% 0;
+  }
+  to {
+    background-position: 150% 0;
+  }
+}
+
+.stage {
+  height: 100%;
+}
+
+.col {
+  position: absolute;
+  top: calc(62.85 * var(--u));
+}
+
+.col[data-col='contact'] { left: calc(129.73 * var(--u)); }
+.col[data-col='actions'] { left: calc(575.33 * var(--u)); }
+.col[data-col='links']   { left: calc(1020.92 * var(--u)); }
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: calc(24 * var(--u));
+  line-height: 1.28;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: calc(34.1 * var(--u));
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-ui);
+  font-size: calc(16 * var(--u));
+  line-height: 1.14;
+  color: var(--white);
+  gap: calc(6.5 * var(--u));
+}
+
+.city {
+  margin-top: calc(28 * var(--u));
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: calc(16 * var(--u));
+  line-height: 1.14;
+}
+
+.lines a,
+.links a {
+  position: relative;
+  transition: color 0.3s;
+}
+
+.lines a:hover,
+.links a:hover {
+  color: var(--lilac);
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: calc(16.6 * var(--u));
+  margin-top: calc(41 * var(--u));
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  font-size: calc(29.7 * var(--u));
+  color: var(--white);
+  transition:
+    transform 0.3s var(--ease-out),
+    color 0.3s;
+}
+
+.social[data-id='linkedin'] {
+  font-size: calc(33 * var(--u));
+}
+
+.social[data-id='youtube'] {
+  font-size: calc(38 * var(--u));
+}
+
+.social:hover {
+  transform: translateY(-3px) scale(1.1);
+  color: var(--lilac);
+}
+
+/* gentle staggered bob on a loop */
+.socials li {
+  animation: bob 4s ease-in-out infinite;
+}
+.socials li:nth-child(2) { animation-delay: 0.4s; }
+.socials li:nth-child(3) { animation-delay: 0.8s; }
+.socials li:nth-child(4) { animation-delay: 1.2s; }
+
+@keyframes bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 calc(-3 * var(--u));
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(16.9 * var(--u));
+}
+
+.links {
+  font-family: var(--font-ui);
+  font-size: calc(16 * var(--u));
+  line-height: 1.8;
+  margin-top: calc(-4.6 * var(--u));
+}
+
+.copy {
+  position: absolute;
+  top: calc(319.1 * var(--u));
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: calc(16 * var(--u));
+  line-height: 1.15;
+  color: var(--white);
+}
+
+@media (max-width: 900px) {
+  .footer {
+    height: auto;
+    padding: 48px 24px 28px;
+  }
+
+  .stage {
+    width: 100%;
+    display: grid;
+    gap: 36px;
+  }
+
+  .col,
+  .col[data-col] {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+
+  .heading {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .lines,
+  .city,
+  .links {
+    font-size: 15px;
+  }
+
+  .city {
+    margin-top: 14px;
+  }
+
+  .socials {
+    margin-top: 20px;
+    gap: 16px;
+  }
+
+  .social {
+    font-size: 26px;
+  }
+
+  .social[data-id='linkedin'] {
+    font-size: 28px;
+  }
+
+  .social[data-id='youtube'] {
+    font-size: 32px;
+  }
+
+  .actions {
+    gap: 12px;
+  }
+
+  .copy {
+    position: relative;
+    top: auto;
+    font-size: 13px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}

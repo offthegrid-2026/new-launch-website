@@ -1,0 +1,55 @@
+/*
+ * Design tokens — every value is lifted from the Canva file "OTG Website Design".
+ * The artboard is 1366px wide; `--u` is one artboard pixel, so
+ * `calc(56 * var(--u))` renders exactly 56px at 1366px viewport width
+ * and scales fluidly around it.
+ */
+:root {
+  --artboard: 1366;
+  --u: calc(min(100vw, 1600px) / var(--artboard));
+
+  /* surfaces */
+  --bg: #0b0c0d;
+  --card-from: #13091c;
+  --card-to: #0c081e;
+  --card-gradient: linear-gradient(135deg, var(--card-from), var(--card-to));
+
+  /* text */
+  --white: #ffffff;
+  --text-muted: #cccccc;
+  --text-soft: #dfdfdf;
+
+  /* accents */
+  --purple: #cb6ce6;
+  --lilac: #bf77d4;
+  --orange: #ff751f;
+  --rust: #da5636;
+  --sky: #38b6ff;
+  --green: #4bac6f;
+  --indigo-line: #543f90;
+  --violet: #8c52ff;
+  --amber: #ff7b1b;
+  --brand-gradient: linear-gradient(90deg, var(--violet), var(--amber));
+
+  /* reason tiles (top → bottom) */
+  --tile-1: #0e0621;
+  --tile-2: #120725;
+  --tile-3: #150b2c;
+  --tile-4: #1c0f3a;
+
+  /* type */
+  --font-display: 'Loubag', 'Times New Roman', serif;
+  --font-body: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-ui: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --font-script: 'Feeling Passionate', 'Brush Script MT', cursive;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 900px) {
+  :root {
+    /* below tablet the layout reflows; --u becomes a gentle scale for type */
+    --u: calc(min(100vw, 900px) / 900);
+  }
+}

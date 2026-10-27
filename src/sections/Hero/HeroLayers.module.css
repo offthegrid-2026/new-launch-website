@@ -1,0 +1,86 @@
+/* Hero-specific loops; layout lives in components/LayerStack. */
+
+/* 0 — slow push-in; the stage lights gently breathe */
+.stage {
+  transform-origin: 50% 30%;
+  animation:
+    pushIn 26s ease-in-out infinite alternate,
+    lights 5s ease-in-out infinite;
+}
+
+@keyframes pushIn {
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes lights {
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+  50% {
+    filter: brightness(1.12) saturate(1.1);
+  }
+}
+
+/* 2 — the ring floats, tilts and drifts through hues */
+.ring {
+  transform-origin: 50% 50%;
+  animation: ringFloat 11s ease-in-out 2s infinite;
+  will-change: transform, filter;
+}
+
+@keyframes ringFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    filter: hue-rotate(0deg) drop-shadow(0 0 0 transparent);
+  }
+  25% {
+    transform: translate3d(calc(6 * var(--u)), calc(-14 * var(--u)), 0) rotate(3deg) scale(1.015);
+  }
+  50% {
+    transform: translate3d(0, calc(-20 * var(--u)), 0) rotate(-1.5deg) scale(1.03);
+    filter: hue-rotate(-18deg) drop-shadow(0 0 calc(24 * var(--u)) rgba(140, 120, 255, 0.35));
+  }
+  75% {
+    transform: translate3d(calc(-6 * var(--u)), calc(-8 * var(--u)), 0) rotate(-3deg) scale(1.01);
+  }
+}
+
+/* 3 — the shadow under the ring breathes in step with it */
+.shadow {
+  transform-origin: 50% 50%;
+  animation: shadowBreath 11s ease-in-out 2s infinite;
+}
+
+@keyframes shadowBreath {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 0.85;
+  }
+}
+
+/* 4 — green glow pulses on the left */
+.glow {
+  transform-origin: 0% 50%;
+  animation: glowPulse 7s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}

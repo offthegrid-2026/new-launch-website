@@ -1,0 +1,50 @@
+.section {
+  position: relative;
+  height: calc(1435 * var(--u));
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.stage {
+  height: 100%;
+}
+
+/* rows are layout-transparent on desktop; children use artboard coords */
+.topRow,
+.bottomRow {
+  display: contents;
+}
+
+@media (max-width: 900px) {
+  .section {
+    height: auto;
+    padding: 56px 16px 72px;
+  }
+
+  .stage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .topRow,
+  .bottomRow {
+    display: grid;
+    gap: 28px;
+  }
+
+  .topRow {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomRow {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
+@media (min-width: 640px) and (max-width: 900px) {
+  .topRow {
+    grid-template-columns: 1fr;
+  }
+}

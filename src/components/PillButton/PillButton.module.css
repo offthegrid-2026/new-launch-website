@@ -1,0 +1,80 @@
+.pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--w) * var(--u));
+  height: calc(38.37 * var(--u));
+  border: calc(2 * var(--u)) solid var(--c);
+  border-radius: 999px;
+  color: var(--c);
+  font-family: var(--font-ui);
+  font-size: calc(13.33 * var(--u));
+  line-height: 1.14;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+}
+
+/* hover fill */
+.pill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--c);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-out);
+  z-index: -1;
+}
+
+/* looping shine sweep */
+.pill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  left: -60%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  animation: sweep 4.5s ease-in-out infinite;
+  z-index: -1;
+}
+
+.pill:hover {
+  color: #0b0c0d;
+  box-shadow: 0 0 calc(24 * var(--u)) color-mix(in srgb, var(--c) 55%, transparent);
+  transform: translateY(-2px);
+}
+
+.pill:hover::before {
+  transform: scaleX(1);
+}
+
+.label {
+  position: relative;
+}
+
+@keyframes sweep {
+  0%,
+  55% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+
+@media (max-width: 900px) {
+  .pill {
+    width: auto;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 13.5px;
+    border-width: 2px;
+  }
+}

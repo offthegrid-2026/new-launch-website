@@ -1,0 +1,181 @@
+.section {
+  position: relative;
+  height: calc(617 * var(--u));
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.stage {
+  height: 100%;
+}
+
+/* Canva: 1186.8 × 387.1 at (89.6, 109.3), r50 */
+.card {
+  position: absolute;
+  left: calc(89.59 * var(--u));
+  top: calc(109.33 * var(--u));
+  width: calc(1186.83 * var(--u));
+  height: calc(387.07 * var(--u));
+  border-radius: calc(50 * var(--u));
+  border: 1px solid transparent;
+  background:
+    var(--card-gradient) padding-box,
+    var(--brand-gradient) border-box;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Canva layer 2: 577 × 308 at (700, 189), relative to the card */
+.photo {
+  position: absolute;
+  left: calc(610.41 * var(--u));
+  top: calc(79.67 * var(--u));
+  width: calc(577 * var(--u));
+  height: calc(308 * var(--u));
+}
+
+/* Canva layer 1 (1366 × 569 at (0, 48)), placed in the photo's own % so it
+   lines up on desktop and mobile. The card clips it; the mask softens
+   Canva's hard clip at x 700 and drops the far-left glow already behind the card */
+.glows {
+  position: absolute;
+  left: -121.32%;
+  top: -45.78%;
+  width: 236.74%;
+  height: 184.74%;
+  max-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 47%, #000 58%);
+  mask-image: linear-gradient(90deg, transparent 47%, #000 58%);
+}
+
+.building {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.eyebrow {
+  position: absolute;
+  left: calc(146.81 * var(--u));
+  top: calc(160.68 * var(--u));
+  font-family: var(--font-ui);
+  font-size: calc(32 * var(--u));
+  line-height: 1.28;
+  letter-spacing: 0.062em;
+  text-transform: uppercase;
+  color: var(--sky);
+}
+
+.name {
+  position: absolute;
+  left: calc(146.81 * var(--u));
+  top: calc(227.92 * var(--u));
+  width: calc(548.01 * var(--u));
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: calc(45.46 * var(--u));
+  line-height: 1.28;
+  color: var(--white);
+}
+
+.eta {
+  position: absolute;
+  left: calc(150.81 * var(--u));
+  top: calc(375.88 * var(--u));
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+  font-family: var(--font-ui);
+  font-size: calc(25.3 * var(--u));
+  line-height: 1.28;
+  color: var(--white);
+}
+
+.minutes {
+  position: relative;
+  font-weight: 700;
+  font-size: calc(63.62 * var(--u));
+  line-height: 1.28;
+  letter-spacing: 0.02em;
+  color: var(--orange);
+  margin-right: calc(12 * var(--u));
+}
+
+.from {
+  font-weight: 600;
+  color: var(--orange);
+  margin-right: 0.28em;
+}
+
+.landmark {
+  font-weight: 400;
+}
+
+@media (max-width: 900px) {
+  .section {
+    height: auto;
+    padding: 48px 16px;
+  }
+
+  .stage {
+    width: 100%;
+    position: relative;
+    padding: 40px 24px 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 32px;
+  }
+
+  .card {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+  }
+
+  .photo {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 577 / 308;
+  }
+
+  .card {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .eyebrow,
+  .name,
+  .eta {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+  }
+
+  .eyebrow {
+    font-size: 20px;
+  }
+
+  .name {
+    margin-top: 8px;
+    font-size: clamp(28px, 7.5vw, 40px);
+  }
+
+  .eta {
+    margin: 16px 0 calc(53.4vw + 4px);
+    flex-wrap: wrap;
+    white-space: normal;
+    font-size: 17px;
+  }
+
+  .minutes {
+    font-size: 44px;
+  }
+}

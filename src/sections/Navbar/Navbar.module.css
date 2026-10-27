@@ -1,0 +1,194 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  transition:
+    background 0.4s var(--ease-out),
+    backdrop-filter 0.4s var(--ease-out);
+}
+
+.bar {
+  height: calc(193 * var(--u));
+  transition: height 0.4s var(--ease-out);
+}
+
+/* compact bar once the page scrolls */
+.scrolled {
+  background: rgba(11, 12, 13, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(203, 108, 230, 0.18);
+}
+
+.scrolled .bar {
+  height: calc(110 * var(--u));
+}
+
+.scrolled .brand {
+  transform: translateY(calc(-32 * var(--u))) scale(0.82);
+}
+
+.scrolled .links {
+  transform: translateY(calc(-27 * var(--u)));
+}
+
+.brand {
+  position: absolute;
+  left: calc(84.5 * var(--u));
+  top: calc(49.6 * var(--u));
+  display: flex;
+  align-items: center;
+  transform-origin: left center;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.logo {
+  width: calc(138 * var(--u));
+  height: calc(95 * var(--u));
+  margin-top: calc(-0.6 * var(--u));
+  mix-blend-mode: lighten;
+}
+
+.divider {
+  width: calc(1.84 * var(--u));
+  height: calc(89.1 * var(--u));
+  margin-left: calc(9 * var(--u));
+  background: var(--white);
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: column;
+  margin-left: calc(13.3 * var(--u));
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(27.89 * var(--u));
+  line-height: 1.14;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.links {
+  position: absolute;
+  top: calc(72.35 * var(--u));
+  left: calc(680 * var(--u));
+  width: calc(612 * var(--u));
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.link {
+  position: relative;
+  font-family: var(--font-ui);
+  font-size: calc(16 * var(--u));
+  line-height: 1.14;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(-6 * var(--u));
+  height: 2px;
+  background: var(--brand-gradient);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.burger,
+.drawer {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .bar {
+    width: 100%;
+    height: 76px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .scrolled .bar {
+    height: 64px;
+  }
+
+  .brand,
+  .scrolled .brand {
+    position: static;
+    transform: none;
+  }
+
+  .logo {
+    width: 70px;
+    height: 48px;
+  }
+
+  .divider {
+    height: 44px;
+    width: 1.5px;
+    margin-left: 6px;
+  }
+
+  .wordmark {
+    font-size: 14px;
+    margin-left: 8px;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .burger {
+    display: grid;
+    gap: 7px;
+    width: 40px;
+    height: 40px;
+    place-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .burger span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.35s var(--ease-out);
+  }
+
+  .burgerOpen span:first-child {
+    transform: translateY(4.5px) rotate(45deg);
+  }
+
+  .burgerOpen span:last-child {
+    transform: translateY(-4.5px) rotate(-45deg);
+  }
+
+  .drawer {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    background: rgba(11, 12, 13, 0.96);
+    backdrop-filter: blur(16px);
+    font-family: var(--font-ui);
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+}

@@ -1,0 +1,36 @@
+/* Canva text box: rotation pivots on the box centre. */
+.box {
+  position: absolute;
+  left: calc(var(--l) * var(--u));
+  top: calc(var(--t) * var(--u));
+  width: calc(var(--w) * var(--u));
+  height: calc(var(--h) * var(--u));
+  transform: rotate(var(--r));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.text {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: calc(var(--fs) * var(--u));
+  line-height: 1.05;
+  letter-spacing: 0.005em;
+  color: var(--rust);
+  white-space: nowrap;
+  text-align: center;
+  animation: sway 6s ease-in-out 1.6s infinite;
+  transform-origin: 30% 60%;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-1.6deg) translateY(calc(-4 * var(--u)));
+  }
+}

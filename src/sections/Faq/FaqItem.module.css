@@ -1,0 +1,134 @@
+/* rows are 88.5px with a 1px #cb6ce6 rule, 1061.4px wide */
+.item {
+  position: relative;
+  border-bottom: 1px solid var(--purple);
+}
+
+/* glowing sweep along the rule on hover */
+.item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  transform: scaleX(0);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.item:hover::after {
+  transform: scaleX(1);
+}
+
+.head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: calc(88.53 * var(--u));
+  text-align: left;
+}
+
+.sign {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: calc(25 * var(--u));
+  height: calc(25 * var(--u));
+  margin-top: calc(-12.5 * var(--u));
+}
+
+.bar {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: calc(4.2 * var(--u));
+  margin-top: calc(-2.1 * var(--u));
+  background: var(--white);
+  transition:
+    transform 0.4s var(--ease-out),
+    opacity 0.4s;
+}
+
+.vertical {
+  transform: rotate(90deg);
+}
+
+.open .vertical {
+  transform: rotate(0deg);
+  opacity: 0;
+}
+
+/* the minus in the design is shorter than the plus */
+.open .bar:first-child {
+  transform: scaleX(0.68);
+  transform-origin: left center;
+}
+
+.q {
+  margin-left: calc(96 * var(--u));
+  font-family: var(--font-display);
+  font-size: calc(26.67 * var(--u));
+  line-height: 1.28;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  transition: color 0.3s;
+}
+
+.head:hover .q {
+  color: var(--lilac);
+}
+
+.panel {
+  overflow: hidden;
+}
+
+.answer {
+  padding: calc(0 * var(--u)) 0 calc(42 * var(--u)) calc(96 * var(--u));
+  margin-top: calc(-0.3 * var(--u));
+  max-width: calc((825 + 96) * var(--u));
+  font-family: var(--font-body);
+  font-size: calc(21.29 * var(--u));
+  line-height: 1.12;
+  color: var(--text-muted);
+  white-space: pre-line;
+}
+
+.answer p + p {
+  margin-top: calc(23.85 * var(--u));
+}
+
+@media (max-width: 900px) {
+  .head {
+    min-height: 72px;
+    padding: 16px 0;
+  }
+
+  .sign {
+    width: 18px;
+    height: 18px;
+    margin-top: -9px;
+  }
+
+  .bar {
+    height: 3px;
+    margin-top: -1.5px;
+  }
+
+  .q {
+    margin-left: 40px;
+    font-size: 20px;
+  }
+
+  .answer {
+    padding: 0 0 24px 40px;
+    max-width: none;
+    font-size: 16px;
+  }
+
+  .answer p + p {
+    margin-top: 14px;
+  }
+}

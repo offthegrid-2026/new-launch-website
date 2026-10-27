@@ -1,0 +1,104 @@
+/* Canva: 649.8 × 105.3 at (358, 711.5), #ccc @ 9% fill, violet→amber stroke @ 57% */
+.bar {
+  position: absolute;
+  left: calc(358.08 * var(--u));
+  top: calc(711.55 * var(--u));
+  width: calc(649.85 * var(--u));
+  height: calc(105.28 * var(--u));
+  border-radius: calc(26 * var(--u));
+  --gb-w: calc(2 * var(--u));
+  --gb: linear-gradient(90deg, rgba(140, 82, 255, 0.57), rgba(255, 123, 27, 0.57));
+  background: rgba(204, 204, 204, 0.09);
+  background-clip: padding-box;
+  border: var(--gb-w) solid transparent;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.stat {
+  position: absolute;
+  top: calc(17.4 * var(--u));
+  display: flex;
+  flex-direction: column;
+}
+
+/* offsets measured from the bar's left edge */
+.stat[data-i='0'] { left: calc(45.1 * var(--u)); }
+.stat[data-i='1'] { left: calc(145.1 * var(--u)); }
+.stat[data-i='2'] { left: calc(302.6 * var(--u)); }
+.stat[data-i='3'] { left: calc(466.3 * var(--u)); }
+
+/* vertical dividers */
+.stat[data-i='1']::before,
+.stat[data-i='2']::before,
+.stat[data-i='3']::before {
+  content: '';
+  position: absolute;
+  top: calc(5.9 * var(--u));
+  width: 1px;
+  height: calc(56.6 * var(--u));
+  background: var(--white);
+}
+.stat[data-i='1']::before { left: calc(-32.6 * var(--u)); }
+.stat[data-i='2']::before { left: calc(-32.4 * var(--u)); }
+.stat[data-i='3']::before { left: calc(-32.6 * var(--u)); }
+
+.value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: calc(36.31 * var(--u));
+  line-height: 1.27;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  margin-top: calc(3.3 * var(--u));
+  font-family: var(--font-body);
+  font-size: calc(15.8 * var(--u));
+  line-height: 1.17;
+  letter-spacing: 0.094em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+@media (max-width: 900px) {
+  .bar {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    margin: 48px auto 0;
+    padding: 16px 4px;
+    border-radius: 20px;
+    --gb-w: 2px;
+    border-width: 2px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat,
+  .stat[data-i] {
+    position: relative;
+    left: auto;
+    top: auto;
+    align-items: center;
+  }
+
+  .stat[data-i]::before {
+    left: 0 !important;
+    top: 8px;
+    height: 44px;
+  }
+
+  .value {
+    font-size: clamp(17px, 5vw, 30px);
+  }
+
+  .label {
+    font-size: clamp(10px, 2.6vw, 13px);
+  }
+}

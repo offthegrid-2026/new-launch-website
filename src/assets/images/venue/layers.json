@@ -1,0 +1,29 @@
+[
+  {
+    "index": 0,
+    "desc": "grid",
+    "file": "layer0.webp",
+    "left": 0,
+    "top": 1,
+    "width": 1366,
+    "height": 616
+  },
+  {
+    "index": 1,
+    "desc": "group of glows behind box",
+    "file": "layer1.webp",
+    "left": 0,
+    "top": 48,
+    "width": 1366,
+    "height": 569
+  },
+  {
+    "index": 2,
+    "desc": "venue image inside box",
+    "file": "layer2.webp",
+    "left": 700,
+    "top": 189,
+    "width": 577,
+    "height": 308
+  }
+]
