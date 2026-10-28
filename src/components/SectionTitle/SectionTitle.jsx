@@ -7,6 +7,7 @@ const ease = [0.22, 1, 0.36, 1]
  * Brush word + display line, read as one heading.
  * `scriptFirst` puts the brush word above ("Why go / Off the Grid?");
  * otherwise it sits below ("Off The Grid '26 / Partners").
+ * `align` = 'center' | 'left' | 'left-md' (centred on phones, left from 768px).
  * `fit` = the brush word's width in em; long words shrink to fit narrow screens.
  */
 export default function SectionTitle({ as = 'h2', script, display, scriptFirst = true, align = 'center', fit, className = '', id }) {

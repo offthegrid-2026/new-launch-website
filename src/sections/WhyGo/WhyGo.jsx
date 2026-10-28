@@ -17,7 +17,7 @@ export default function WhyGo() {
       <Glow x="8%" y="10%" color="255, 160, 110" opacity={0.12} />
       <Container>
         <div className={styles.top}>
-          <SectionTitle id="why-title" script={whyGo.script} display={whyGo.heading} align="left" />
+          <SectionTitle id="why-title" script={whyGo.script} display={whyGo.heading} align="left-md" />
 
           <motion.img
             src={images.eye}

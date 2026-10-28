@@ -43,6 +43,34 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* phones: two rows of two; the stats are divs after the beam's span */
+@media (max-width: 599.98px) {
+  .bar {
+    margin-top: auto;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 20px;
+    padding-block: 18px;
+  }
+
+  .stat:nth-of-type(odd)::before {
+    display: none;
+  }
+
+  .stat:nth-of-type(n + 3)::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .value {
+    font-size: clamp(1.75rem, 1.2rem + 3vw, 2.25rem);
+  }
+}
+
 .label {
   margin-top: 2px;
   font-size: var(--step--2);

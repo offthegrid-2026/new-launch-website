@@ -13,6 +13,19 @@
   align-items: flex-start;
 }
 
+/* centred on phones, left-aligned from 768px */
+.title[data-align='left-md'] {
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .title[data-align='left-md'] {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
 .scriptWrap {
   display: block;
 }

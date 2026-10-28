@@ -13,6 +13,7 @@
 }
 
 .content {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,4 +68,11 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px 20px;
+}
+
+/* phones: the stats bar drops to the foot of the hero (StatsBar sets margin-top: auto) */
+@media (max-width: 599.98px) {
+  .ctas {
+    margin-bottom: clamp(40px, 8svh, 96px);
+  }
 }
