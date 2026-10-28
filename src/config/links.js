@@ -23,6 +23,15 @@ export const SOCIALS = [
   { id: 'youtube', label: 'Off The Grid on YouTube', href: 'https://www.youtube.com/@thinkoffthegrid' },
 ]
 
+// icons on the back of each speaker card, keyed by speaker id (content/speakers.js).
+// An icon only shows once its href is filled in.
+// TODO(client): speakers' profile URLs not supplied yet
+export const SPEAKER_LINKS = {
+  'paul-sandip': { linkedin: '', website: '' },
+  'indroneel-mukherjee': { instagram: '', linkedin: '' },
+  'charbak-dipta': { instagram: '', linkedin: '' },
+}
+
 // named links that FAQ answers can reference with { t, link: '<key>' }
 export const NAMED_LINKS = {
   becomeSpeaker: BECOME_SPEAKER_URL,

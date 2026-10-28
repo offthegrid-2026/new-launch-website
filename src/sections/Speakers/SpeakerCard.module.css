@@ -1,18 +1,36 @@
 .card {
-  position: relative;
+  perspective: 1600px;
+}
+
+/* both faces share one grid cell, so they are always the same size */
+.inner {
+  display: grid;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.card[data-flipped='true'] .inner {
+  transform: rotateY(180deg);
+}
+
+.face {
+  grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
   border-radius: var(--radius-md);
   border: 1px solid rgba(140, 110, 255, 0.45);
   background: linear-gradient(180deg, #120d22, #0c0a18);
   overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transition:
-    transform 0.5s var(--ease-out),
+    translate 0.5s var(--ease-out),
     box-shadow 0.5s var(--ease-out);
 }
 
-.card:hover {
-  transform: translateY(-6px);
+.card:hover .face {
+  translate: 0 -6px;
   box-shadow: 0 24px 50px rgba(203, 108, 230, 0.22);
 }
 
@@ -72,13 +90,126 @@
   height: 36px;
   border: 1.5px solid var(--white);
   border-radius: 50%;
-  transition: transform 0.4s var(--ease-out);
+  transition:
+    transform 0.4s var(--ease-out),
+    background-color 0.3s,
+    color 0.3s;
+}
+
+/* 44px touch target around the 36px circle */
+.arrow::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
 }
 
 .arrow svg {
   width: 18px;
 }
 
-.card:hover .arrow {
+.card:hover .arrow,
+.arrow:focus-visible {
   transform: translateX(4px);
+}
+
+.arrow:hover {
+  background: var(--white);
+  color: var(--bg);
+}
+
+/* back: the bio, per the Canva "OTG SPEAKER CARD" back pages */
+.back {
+  transform: rotateY(180deg);
+  padding: clamp(20px, 2.4vw, 32px);
+  background:
+    radial-gradient(120% 60% at 100% 100%, rgba(140, 82, 255, 0.16), transparent 70%),
+    radial-gradient(90% 50% at 0% 40%, rgba(56, 182, 255, 0.08), transparent 70%),
+    linear-gradient(180deg, #120d22, #0c0a18);
+}
+
+.backButton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--purple);
+  color: #1a0f24;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.backButton svg {
+  width: 22px;
+}
+
+.backButton:hover,
+.backButton:focus-visible {
+  transform: translateX(-4px);
+}
+
+.bio {
+  margin-top: clamp(24px, 3vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: var(--step--1);
+  line-height: 1.45;
+  color: var(--text-soft);
+}
+
+.lead {
+  font-weight: 700;
+  color: var(--white);
+}
+
+.socials {
+  margin-top: auto;
+  padding-top: var(--stack);
+  display: flex;
+  gap: 8px;
+}
+
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -8px;
+  font-size: 26px;
+  transition: color 0.3s;
+}
+
+.socials li + li a {
+  margin-left: 0;
+}
+
+.socials a:hover {
+  color: var(--purple);
+}
+
+/* no spin: the faces crossfade instead */
+@media (prefers-reduced-motion: reduce) {
+  .inner,
+  .card[data-flipped='true'] .inner {
+    transform: none;
+  }
+
+  .back {
+    transform: none;
+    opacity: 0;
+  }
+
+  .face {
+    transition: opacity 0.35s ease !important;
+  }
+
+  .card[data-flipped='true'] .front {
+    opacity: 0;
+  }
+
+  .card[data-flipped='true'] .back {
+    opacity: 1;
+  }
 }

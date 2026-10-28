@@ -18,14 +18,15 @@ const manifests = import.meta.glob('../../assets/images/*/layers.json', { eager:
  *              intro     — framer-motion props for the entrance
  *              parallax  — px the layer drifts over one viewport of scroll
  *              skip      — the section renders this layer itself
+ *   anchor     'center' crops evenly top and bottom; 'top' keeps the top edge
  */
-export default function LayerStack({ section, height, behaviour = {}, className = '', children }) {
+export default function LayerStack({ section, height, behaviour = {}, anchor = 'center', className = '', children }) {
   const layers = manifests[`../../assets/images/${section}/layers.json`] || []
   const { scrollY } = useScroll()
 
   return (
     <div className={`${styles.viewport} ${className}`} aria-hidden="true">
-      <div className={styles.artboard} style={{ '--ah': height }}>
+      <div className={`${styles.artboard} ${anchor === 'top' ? styles.top : ''}`} style={{ '--ah': height }}>
         {layers.filter((l) => !behaviour[l.index]?.skip).map((l) => (
           <Layer
             key={l.index}

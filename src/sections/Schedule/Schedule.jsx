@@ -62,7 +62,9 @@ export default function Schedule() {
       <Container>
         <SectionTitle id="schedule-title" display={schedule.heading} script={schedule.script} scriptFirst={false} />
 
-        <div className={styles.layout}>
+        {/* phones: days stacked, one vertical bar per pass beside them;
+            ≥900px: days side by side, one horizontal bar per pass under them */}
+        <div className={styles.layout} style={{ '--days': days.length, '--passes': access.length }}>
           <Reveal className={styles.days} amount={0.15}>
             {days.map((d) => (
               <Day key={d.id} day={d} />
@@ -71,13 +73,11 @@ export default function Schedule() {
 
           <img src={images.sphere} alt="" width="420" height="580" loading="lazy" decoding="async" className={styles.sphere} />
 
-          <Reveal as="table" className={styles.table} amount={0.3} delay={0.1}>
+          <Reveal as="table" className={styles.table} amount={0.15} delay={0.1}>
             <caption className="visually-hidden">Which passes include each day</caption>
             <thead>
               <tr className={styles.headRow}>
-                <th scope="col" className={styles.passCell}>
-                  Pass
-                </th>
+                <th scope="col">Pass</th>
                 {days.map((d) => (
                   <th key={d.id} scope="col">
                     {d.date}
@@ -86,18 +86,18 @@ export default function Schedule() {
               </tr>
             </thead>
             <tbody>
-              {access.map((row) => {
+              {access.map((row, p) => {
                 const from = days.findIndex((d) => row.days[d.id]) + 1
                 return (
-                  <tr key={row.pass} className={styles.row} data-elite={row.elite || undefined} style={{ '--from': from }}>
+                  <tr key={row.pass} className={styles.row} data-elite={row.elite || undefined} style={{ '--from': from, '--p': p + 1 }}>
                     <th scope="row" className={styles.passCell}>
-                      {row.pass}
+                      <span className={styles.passName}>{row.pass}</span>
                     </th>
-                    {days.map((d) =>
+                    {days.map((d, i) =>
                       row.days[d.id] ? (
-                        <td key={d.id} className={styles.included}>
+                        <td key={d.id} className={styles.included} style={{ '--d': i + 1 }}>
                           <Check />
-                          Included
+                          <span className={styles.includedLabel}>Included</span>
                         </td>
                       ) : (
                         <td key={d.id} className={styles.excluded}>

@@ -72,4 +72,4 @@ Body measure: `--measure: 65ch`.
 | `--logo-h` | `clamp(36px, 1.6rem + 2.4vw, 68px)` | header logo (Canva 95px) |
 | `--header-h` | `logo + 2 × clamp(12px…24px)` | fixed header; scroll offset |
 | `--hero-pad-top` | `header-h + clamp(24px, 1rem + 3vw, 64px)` | hero content starts here |
-| `--hero-min-h` | `min(80svh, 760px)` | Canva hero 926px |
+| hero `min-height` | `100svh` | Canva hero 926px; date at y 240 of the artboard |
