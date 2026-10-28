@@ -23,5 +23,5 @@ const behaviour = {
 }
 
 export default function HeroLayers() {
-  return <LayerStack section="hero" height={926} behaviour={behaviour} className={styles.backdrop} />
+  return <LayerStack section="hero" height={926} anchor="top" behaviour={behaviour} className={styles.backdrop} />
 }

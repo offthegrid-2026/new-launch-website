@@ -1,6 +1,13 @@
+/*
+ * The hero fills the first screen, so nothing of the next section shows.
+ * --hu is the scale of the 1366 × 926 backdrop artboard (see LayerStack);
+ * the date starts where Canva puts it (y 240), inside the 3D ring.
+ */
 .hero {
-  min-height: var(--hero-min-h);
-  padding-top: var(--hero-pad-top);
+  --hu: max(100vw / 1366, 100svh / 926);
+  min-height: 100svh;
+  padding-top: max(var(--hero-pad-top), calc(240 * var(--hu)));
+  padding-bottom: clamp(24px, 1rem + 2vw, 48px);
   display: flex;
   flex-direction: column;
 }

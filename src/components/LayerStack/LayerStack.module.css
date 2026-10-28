@@ -21,6 +21,12 @@
   transform: translate(-50%, -50%);
 }
 
+/* wider-than-artboard boxes crop from the bottom only */
+.top {
+  top: 0;
+  transform: translateX(-50%);
+}
+
 .layer {
   position: absolute;
   left: calc(var(--l) * var(--u));

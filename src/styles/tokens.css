@@ -65,7 +65,6 @@
   --header-pad: clamp(12px, 0.5rem + 1vw, 24px);
   --header-h: calc(var(--logo-h) + 2 * var(--header-pad));
   --hero-pad-top: calc(var(--header-h) + clamp(24px, 1rem + 3vw, 64px));
-  --hero-min-h: min(80svh, 760px);
 
   /* motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
