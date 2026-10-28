@@ -97,23 +97,18 @@
   height: 100%;
 }
 
+/* three photos in a row at every width; they just get smaller on phones */
 .strip {
-  margin-top: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(12px, 2.4vw, 32px);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-  gap: clamp(16px, 2vw, 28px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(8px, 2vw, 28px);
 }
 
 .tile {
   aspect-ratio: 640 / 772;
   border-radius: var(--radius-md);
   overflow: hidden;
-}
-
-@media (max-width: 599px) {
-  .tile {
-    aspect-ratio: 4 / 3;
-  }
 }
 
 .tile img {
@@ -144,6 +139,23 @@
   font-size: var(--step--1);
 }
 
+@media (max-width: 599px) {
+  .tile {
+    border-radius: 12px;
+  }
+
+  .mapLabel {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    padding: 4px 6px;
+    border-radius: 8px;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
+
 .mapLink:focus-visible {
   outline-offset: -4px;
 }
@@ -162,11 +174,5 @@
   .photo {
     margin-top: 0;
     margin-left: -12%;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 899px) {
-  .strip {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
