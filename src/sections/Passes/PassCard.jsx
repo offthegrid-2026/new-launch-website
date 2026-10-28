@@ -7,6 +7,12 @@ import styles from './PassCard.module.css'
 function Bar({ pass, children }) {
   return (
     <div className={styles.bar}>
+      {pass.availableFrom && (
+        // the status label beside it already says when the pass opens, so this is visual only
+        <span className={styles.tooltip} aria-hidden="true">
+          Available from <strong>{pass.availableFrom}</strong>
+        </span>
+      )}
       {pass.cta.buy ? (
         <a href={REGISTER_URL} className={styles.cta}>
           {pass.cta.label}
