@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { hero, ctas } from '../../data/content'
+import { hero, ctas } from '../../content/site'
+import Container from '../../components/Container/Container'
 import PillButton from '../../components/PillButton/PillButton'
 import HeroLayers from './HeroLayers'
 import StatsBar from './StatsBar'
@@ -13,7 +14,7 @@ export default function Hero() {
     <section id="top" className={styles.hero}>
       <HeroLayers />
 
-      <div className={`stage ${styles.stage}`}>
+      <Container className={styles.content}>
         <motion.p
           className={styles.date}
           initial={{ opacity: 0, letterSpacing: '0.4em' }}
@@ -55,16 +56,16 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.15, ease }}
         >
-          <PillButton href={ctas.delegate.href} color="var(--lilac)" width={199.02}>
+          <PillButton href={ctas.delegate.href} color="var(--lilac)">
             {ctas.delegate.label}
           </PillButton>
-          <PillButton href={ctas.partner.href} color="var(--orange)" width={145.47}>
+          <PillButton href={ctas.partner.href} color="var(--orange)">
             {ctas.partner.label}
           </PillButton>
         </motion.div>
 
         <StatsBar stats={hero.stats} />
-      </div>
+      </Container>
     </section>
   )
 }

@@ -1,5 +1,11 @@
 /* Hero-specific loops; layout lives in components/LayerStack. */
 
+/* the stage photo dissolves into the page instead of ending on a hard edge */
+.backdrop {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+
 /* 0 — slow push-in; the stage lights gently breathe */
 .stage {
   transform-origin: 50% 30%;

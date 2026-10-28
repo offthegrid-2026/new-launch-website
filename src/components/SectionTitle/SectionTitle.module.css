@@ -1,0 +1,49 @@
+.title {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+}
+
+.title[data-align='center'] {
+  align-items: center;
+  text-align: center;
+}
+
+.title[data-align='left'] {
+  align-items: flex-start;
+}
+
+.scriptWrap {
+  display: block;
+}
+
+.script {
+  display: block;
+  font-family: var(--font-script);
+  font-size: var(--step-script);
+  font-size: min(var(--step-script), (100vw - 2 * var(--page-gutter)) / var(--fit, 0.01));
+  line-height: 1;
+  color: var(--rust);
+  white-space: nowrap;
+  transform: rotate(-5deg);
+  padding-inline: 0.1em;
+}
+
+.display {
+  position: relative;
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-5);
+  line-height: 1.1;
+  color: var(--white);
+}
+
+/* brush word above: the display line tucks up into it */
+.title[data-order='script'] .display {
+  margin-top: -0.25em;
+}
+
+/* brush word below: it overlaps the bottom of the display line */
+.title[data-order='display'] .scriptWrap {
+  margin-top: -0.3em;
+}

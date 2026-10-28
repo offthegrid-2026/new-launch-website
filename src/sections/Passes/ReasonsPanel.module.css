@@ -1,34 +1,25 @@
-/*
- * Canva: panel 724.2 × 574.9 at (510.5, 131.3), r25, #172d8c @7% fill.
- * Every border = 2px #cb6ce6 under a violet→amber stroke @57%,
- * which composites to #a75df4 → #e97572.
- */
+/* Canva: #172d8c @7% fill; borders composite to #a75df4 → #e97572 */
 .panel {
-  position: absolute;
-  left: calc(510.52 * var(--u));
-  top: calc(131.3 * var(--u));
-  width: calc(724.18 * var(--u));
-  height: calc(574.93 * var(--u));
-  border-radius: calc(26 * var(--u));
-  --gb-w: calc(2 * var(--u));
-  --gb: linear-gradient(90deg, #a75df4, #e97572);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  --gb-w: 2px;
+  --gb: var(--outline-gradient);
   border: var(--gb-w) solid transparent;
   background: rgba(23, 45, 140, 0.07);
   background-clip: padding-box;
+  container-type: inline-size;
 }
 
 .title {
-  position: absolute;
-  top: calc(20.1 * var(--u));
-  left: 0;
-  right: 0;
+  padding: 16px 20px 14px;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: calc(25.3 * var(--u));
-  line-height: 1.28;
+  font-size: var(--step-2);
+  line-height: 1.25;
   letter-spacing: 0.02em;
-  color: var(--white);
 }
 
 .accent {
@@ -48,39 +39,43 @@
 }
 
 .list {
-  position: absolute;
-  inset: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  counter-reset: none;
 }
 
-/* tiles overlap like a stack, exactly as in the artboard */
+/* tiles overlap like a stack, as in the artboard */
 .tile {
-  position: absolute;
-  left: calc(-2 * var(--u));
-  right: calc(-2 * var(--u));
-  border-radius: calc(26 * var(--u));
-  border: calc(2 * var(--u)) solid transparent;
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 16px;
+  row-gap: 6px;
+  align-content: start;
+  margin: 0 -2px -2px;
+  padding: clamp(16px, 2cqi, 24px) clamp(16px, 3cqi, 30px) clamp(20px, 3cqi, 30px);
+  border-radius: var(--radius-md);
+  border: 2px solid transparent;
   background:
     linear-gradient(var(--fill), var(--fill)) padding-box,
-    linear-gradient(90deg, #a75df4, #e97572) border-box;
+    var(--outline-gradient) border-box;
 }
 
-.tile[data-i='0'] { --fill: var(--tile-1); top: calc(69.63 * var(--u)); height: calc(165.16 * var(--u)); }
-.tile[data-i='1'] { --fill: var(--tile-2); top: calc(190.63 * var(--u)); height: calc(161.05 * var(--u)); }
-.tile[data-i='2'] { --fill: var(--tile-3); top: calc(307.52 * var(--u)); height: calc(161.05 * var(--u)); }
-.tile[data-i='3'] { --fill: var(--tile-4); top: calc(432.95 * var(--u)); height: calc(141.98 * var(--u)); }
+.tile:nth-child(1) { --fill: var(--tile-1); }
+.tile:nth-child(2) { --fill: var(--tile-2); }
+.tile:nth-child(3) { --fill: var(--tile-3); }
+.tile:nth-child(4) { --fill: var(--tile-4); margin-bottom: -2px; }
 
-/*
- * Hover never moves, resizes or re-stacks a tile — the overlaps stay as
- * designed. A spotlight follows the pointer inside the tile, its number
- * lights up, and the other tiles dim back.
- */
+/* spotlight follows the pointer; the other tiles dim back */
 .tile::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    calc(260 * var(--u)) circle at var(--mx, 50%) var(--my, 50%),
+    260px circle at var(--mx, 50%) var(--my, 50%),
     rgba(203, 108, 230, 0.2),
     rgba(255, 117, 31, 0.06) 45%,
     transparent 70%
@@ -97,128 +92,54 @@
 .num,
 .tileTitle,
 .body {
+  position: relative;
   transition:
     opacity 0.4s var(--ease-out),
-    transform 0.45s var(--ease-out),
     color 0.4s var(--ease-out);
 }
 
 .list:has(.tile:hover) .tile:not(:hover) > * {
-  opacity: 0.45;
-}
-
-.tile:hover .num {
-  transform: scale(1.12);
-  background: linear-gradient(90deg, var(--orange), #ffb27a);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.tile:hover .tileTitle {
-  transform: translateX(calc(6 * var(--u)));
-}
-
-.tile:hover .body {
-  color: var(--white);
+  opacity: 0.5;
 }
 
 .num {
-  position: absolute;
-  left: calc(30.1 * var(--u));
-  top: calc(23.4 * var(--u));
+  grid-row: span 2;
   font-family: var(--font-ui);
   font-weight: 700;
-  font-size: calc(27.62 * var(--u));
-  line-height: 1.28;
-  letter-spacing: 0.02em;
-  color: var(--white);
-  transform-origin: 0 50%;
+  font-size: var(--step-2);
+  line-height: 1.2;
+}
+
+.tile:hover .num {
+  color: var(--orange);
 }
 
 .tileTitle {
-  position: absolute;
-  left: calc(106.6 * var(--u));
-  top: calc(22.6 * var(--u));
-  width: calc(175 * var(--u));
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: calc(21.3 * var(--u));
-  line-height: 1.28;
-  letter-spacing: 0.02em;
-  color: var(--white);
+  font-size: var(--step-1);
+  line-height: 1.2;
 }
 
 .body {
-  position: absolute;
-  left: calc(305.1 * var(--u));
-  top: calc(23.4 * var(--u));
-  width: calc(368.12 * var(--u));
-  font-family: var(--font-body);
-  font-size: calc(16 * var(--u));
-  line-height: 1.12;
+  font-size: var(--step-0);
+  line-height: 1.4;
   color: var(--text-soft);
 }
 
-@media (max-width: 900px) {
-  .panel {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    height: auto;
-    border-radius: 22px;
-    --gb-w: 2px;
-    border-width: 2px;
-    padding: 20px 0 0;
-  }
-
-  .title {
-    position: relative;
-    top: auto;
-    font-size: 22px;
-    padding: 0 16px 16px;
-  }
-
-  .list {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .tile,
-  .tile[data-i] {
-    position: relative;
-    top: auto;
-    height: auto;
-    left: auto;
-    right: auto;
-    margin: 0 -2px -2px;
-    border-width: 2px;
-    border-radius: 22px;
-    padding: 20px 20px 22px 64px;
+/* wide panel: number · title · body in one row, as in the design */
+@container (min-width: 620px) {
+  .tile {
+    grid-template-columns: 3.5ch minmax(0, 0.7fr) minmax(0, 1.3fr);
+    column-gap: 24px;
   }
 
   .num {
-    left: 18px;
-    top: 18px;
-    font-size: 22px;
-  }
-
-  .tileTitle,
-  .body {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: auto;
-  }
-
-  .tileTitle {
-    font-size: 20px;
+    grid-row: auto;
   }
 
   .body {
-    margin-top: 8px;
-    font-size: 15px;
+    font-size: var(--step--1);
+    line-height: 1.35;
   }
 }

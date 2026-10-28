@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { nav } from '../../data/content'
+import { nav } from '../../content/site'
 import { images } from '../../assets/images'
+import Container from '../../components/Container/Container'
 import styles from './Navbar.module.css'
 
 export default function Navbar() {
@@ -9,7 +10,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -17,20 +18,19 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
+    if (!open) return
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [open])
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-      <motion.div
-        className={`stage ${styles.bar}`}
-        initial={{ opacity: 0, y: -24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <a href="#top" className={styles.brand} aria-label="Off The Grid Design Summit 2026 — home">
-          <img src={images.logo} alt="" className={styles.logo} />
+      <Container className={styles.bar}>
+        <a href="#top" className={styles.brand} aria-label="Off The Grid Design Summit 2026, back to top">
+          <img src={images.logo} alt="" className={styles.logo} width="138" height="95" />
           <span className={styles.divider} />
-          <span className={styles.wordmark}>
+          <span className={styles.wordmark} aria-hidden="true">
             {nav.wordmark.map((w) => (
               <span key={w}>{w}</span>
             ))}
@@ -38,17 +38,10 @@ export default function Navbar() {
         </a>
 
         <nav className={styles.links} aria-label="Primary">
-          {nav.links.map((l, i) => (
-            <motion.a
-              key={l.label}
-              href={l.href}
-              className={styles.link}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.07, duration: 0.6 }}
-            >
+          {nav.links.map((l) => (
+            <a key={l.label} href={l.href} className={styles.link}>
               {l.label}
-            </motion.a>
+            </a>
           ))}
         </nav>
 
@@ -57,15 +50,17 @@ export default function Navbar() {
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
+          aria-controls="mobile-nav"
         >
           <span />
           <span />
         </button>
-      </motion.div>
+      </Container>
 
       <AnimatePresence>
         {open && (
           <motion.nav
+            id="mobile-nav"
             className={styles.drawer}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

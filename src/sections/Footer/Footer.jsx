@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion'
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa'
-import { footer, ctas } from '../../data/content'
+import { footer, ctas, nav } from '../../content/site'
+import { SOCIALS } from '../../config/links'
+import { images } from '../../assets/images'
+import Container from '../../components/Container/Container'
 import PillButton from '../../components/PillButton/PillButton'
 import Reveal from '../../components/Reveal/Reveal'
 import styles from './Footer.module.css'
@@ -15,10 +17,24 @@ const icons = {
 export default function Footer() {
   const { contact, quickLinks } = footer
   return (
-    <footer id="footer" className={styles.footer}>
-      <span className={styles.topLine} aria-hidden="true" />
-      <div className={`stage ${styles.stage}`}>
-        <Reveal className={styles.col} data-col="contact">
+    <footer className={styles.footer}>
+      <Container className={styles.grid}>
+        <div className={styles.brand}>
+          <img src={images.logo} alt="Off The Grid" className={styles.logo} width="138" height="95" loading="lazy" />
+          <span className={styles.divider} aria-hidden="true" />
+          <span className={styles.wordmark} aria-hidden="true">
+            {nav.wordmark.map((w) => (
+              <span key={w}>{w}</span>
+            ))}
+          </span>
+        </div>
+
+        <div className={styles.partOf}>
+          <p>{footer.partOf}</p>
+          <img src={images.bees} alt="Bengal Education & Employment Summit 2026" width="440" height="188" loading="lazy" />
+        </div>
+
+        <Reveal className={styles.col} id="contact">
           <h2 className={styles.heading}>{contact.heading}</h2>
           <p className={styles.lines}>
             <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
@@ -26,50 +42,52 @@ export default function Footer() {
           </p>
           <p className={styles.city}>{contact.city}</p>
           <ul className={styles.socials}>
-            {footer.socials.map((s, i) => {
+            {SOCIALS.map((s) => {
               const Icon = icons[s.id]
               return (
-                <motion.li
-                  key={s.id}
-                  initial={{ opacity: 0, scale: 0.4 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + i * 0.08, type: 'spring', stiffness: 260, damping: 14 }}
-                >
-                  <a href={s.href} aria-label={s.label} className={styles.social} data-id={s.id}>
-                    <Icon />
+                <li key={s.id}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${s.label} (opens in a new tab)`}
+                    className={styles.social}
+                  >
+                    <Icon aria-hidden="true" />
                   </a>
-                </motion.li>
+                </li>
               )
             })}
           </ul>
         </Reveal>
 
-        <Reveal className={styles.col} data-col="actions" delay={0.1}>
+        <Reveal className={styles.col} delay={0.1}>
           <h2 className={styles.heading}>{footer.actionsHeading}</h2>
           <div className={styles.actions}>
-            <PillButton href={ctas.delegate.href} color="var(--white)" width={199.02}>
+            <PillButton href={ctas.delegate.href} color="var(--white)">
               {ctas.delegate.label}
             </PillButton>
-            <PillButton href={ctas.partner.href} color="var(--orange)" width={145.47}>
+            <PillButton href={ctas.partner.href} color="var(--orange)">
               {ctas.partner.label}
             </PillButton>
           </div>
         </Reveal>
 
-        <Reveal className={styles.col} data-col="links" delay={0.2}>
+        <Reveal className={styles.col} delay={0.2}>
           <h2 className={styles.heading}>{quickLinks.heading}</h2>
           <ul className={styles.links}>
             {quickLinks.links.map((l) => (
               <li key={l.label}>
-                <a href={l.href}>{l.label}</a>
+                <a href={l.href} id={l.id}>
+                  {l.label}
+                </a>
               </li>
             ))}
           </ul>
         </Reveal>
 
         <p className={styles.copy}>{footer.copyright}</p>
-      </div>
+      </Container>
     </footer>
   )
 }

@@ -1,170 +1,105 @@
-.section {
-  position: relative;
-  height: calc(579 * var(--u));
-  overflow: hidden;
-  background: var(--bg);
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
 }
 
-.stage {
-  height: 100%;
+/* the 3D eye: small on phones, never taller than 40% of the screen,
+   never wider than its column (so it can't cause sideways scroll) */
+.eye {
+  align-self: center;
+  width: clamp(140px, 44vw, 340px);
+  max-width: 100%;
+  max-height: 40vh;
+  height: auto;
+  object-fit: contain;
+  animation: float 9s ease-in-out 1.6s infinite;
 }
 
-.heading {
-  position: absolute;
-  inset: 0;
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    translate: 0 -10px;
+    filter: hue-rotate(30deg) drop-shadow(0 0 16px rgba(80, 230, 200, 0.35));
+  }
 }
 
-/* "Why go" sits under "Off the Grid?" */
-.script {
-  z-index: 1;
-}
-
-.title {
-  position: absolute;
-  left: calc(86.69 * var(--u));
-  top: calc(197.33 * var(--u));
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: calc(67.86 * var(--u));
-  line-height: 1.28;
-  color: var(--white);
-  white-space: nowrap;
-  z-index: 2;
-}
-
-.eyeMobile {
-  display: none;
-}
-
-/* quotes start at x = -97 in the artboard and bleed past both edges */
+/* quote ticker, faded at the container edges so it lines up with every other section */
 .marquee {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(341.66 * var(--u));
+  margin-top: var(--stack);
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
 .track {
   display: flex;
   width: max-content;
-  gap: calc(64 * var(--u));
-  /* start offset reproduces the Canva composition at load */
-  transform: translateX(calc(-97.19 * var(--u)));
+  gap: clamp(32px, 4vw, 64px);
   animation: marquee 48s linear infinite;
 }
 
-.marquee:hover .track {
+.marquee:hover .track,
+.marquee:focus-within .track {
   animation-play-state: paused;
 }
 
 .quote {
   flex: none;
-  width: calc(370 * var(--u));
-  font-family: var(--font-body);
-  font-size: calc(29.33 * var(--u));
-  line-height: 1.12;
+  width: clamp(260px, 22vw + 140px, 380px);
+  font-size: var(--step-2);
+  line-height: 1.25;
   color: var(--text-soft);
 }
-
-.quote:nth-child(4n + 1) { width: calc(397.48 * var(--u)); }
-.quote:nth-child(4n + 2) { width: calc(391.9 * var(--u)); }
-.quote:nth-child(4n + 3) { width: calc(342.91 * var(--u)); }
-.quote:nth-child(4n + 4) { width: calc(342.91 * var(--u)); }
 
 .hl {
   color: var(--purple);
 }
 
+/* the track holds two identical sets: shifting by half loops seamlessly */
 @keyframes marquee {
-  from {
-    transform: translateX(calc(-97.19 * var(--u)));
-  }
   to {
-    /* one full set: widths (1475.2) + 4 gaps (256) */
-    transform: translateX(calc((-97.19 - 1731.2) * var(--u)));
+    transform: translateX(calc(-50% - clamp(32px, 4vw, 64px) / 2));
   }
 }
 
-@media (max-width: 900px) {
-  .section {
-    height: auto;
-    padding: 72px 0 64px;
-  }
-
-  .stage {
-    width: 100%;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
+@media (min-width: 768px) {
+  .top {
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
   }
 
-  .heading {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 200px;
+  .eye {
+    align-self: auto;
+    width: clamp(200px, 24vw, 340px);
   }
+}
 
-  /* doubled class beats BrushText's own positioning */
-  .script.script {
-    left: -4px;
-    top: 0;
-    width: 100%;
-    height: 120px;
-  }
-
-  .script > * {
-    font-size: 84px;
-  }
-
-  .title {
-    left: 0;
-    top: 112px;
-    font-size: clamp(40px, 11vw, 60px);
-  }
-
-  .eyeLayer {
-    display: none;
-  }
-
-  .eyeMobile {
-    display: block;
-    width: min(80vw, 340px);
-    margin-top: 16px;
-    --u: calc(100vw / 900);
-  }
-
-  .eyeMobile img {
-    width: 100%;
-    height: auto;
-  }
-
+/* no ticker: show the quotes once, in a grid */
+@media (prefers-reduced-motion: reduce) {
   .marquee {
-    position: relative;
-    top: auto;
-    margin-top: 32px;
-  }
-
-  .quote,
-  .quote:nth-child(n) {
-    width: 300px;
-    font-size: 22px;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .track {
-    gap: 40px;
-    animation-name: marquee-m;
-    animation-duration: 36s;
+    width: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    animation: none;
   }
 
-  @keyframes marquee-m {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-1360px);
-    }
+  .quote {
+    width: auto;
+  }
+
+  .copy {
+    display: none;
   }
 }

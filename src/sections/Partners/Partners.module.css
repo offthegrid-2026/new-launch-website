@@ -1,0 +1,55 @@
+.status {
+  width: fit-content;
+  margin: calc(var(--stack) * 0.75) auto 0;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--step-2);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--rust), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pitch {
+  margin-top: calc(var(--stack) * 2);
+  display: grid;
+  gap: var(--stack);
+  align-items: center;
+}
+
+.copy {
+  max-width: var(--measure);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: var(--step-0);
+  line-height: 1.45;
+  color: var(--text-soft);
+}
+
+.pitchTitle {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-4);
+  line-height: 1.15;
+  color: var(--white);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .pitch {
+    grid-template-columns: 1fr auto;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

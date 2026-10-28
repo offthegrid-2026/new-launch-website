@@ -1,36 +1,31 @@
-import { speakers } from '../../data/content'
+import { speakers } from '../../content/speakers'
 import { speakerImages } from '../../assets/images'
-import GridBackdrop from '../../components/GridBackdrop/GridBackdrop'
+import Container from '../../components/Container/Container'
+import Glow from '../../components/Glow/Glow'
 import Reveal from '../../components/Reveal/Reveal'
+import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import SpeakerCard from './SpeakerCard'
 import styles from './Speakers.module.css'
 
 export default function Speakers() {
   return (
-    <section id="speakers" className={`${styles.section} ${speakers.comingSoon ? styles.teaser : ''}`}>
-      <GridBackdrop />
-      <div className={`stage ${styles.stage}`}>
-        <Reveal as="h2" from="blur" className={styles.heading}>
-          {speakers.heading}
-        </Reveal>
-        {speakers.comingSoon ? (
-          <Reveal as="p" from="blur" className={styles.soon} delay={0.2}>
-            {speakers.comingSoon}
+    <section id="speakers" aria-labelledby="speakers-title">
+      <Glow x="96%" y="55%" color="190, 190, 255" opacity={0.12} duration={18} />
+      <Container>
+        <SectionTitle id="speakers-title" script={speakers.script} display={speakers.heading} fit={7.6} />
+
+        <ul className={styles.grid}>
+          {speakers.items.map((s, i) => (
+            <SpeakerCard key={s.id} speaker={s} src={speakerImages[s.id]} delay={i * 0.12} />
+          ))}
+        </ul>
+
+        {speakers.more && (
+          <Reveal as="p" from="blur" className={styles.more} delay={0.2}>
+            {speakers.more}
           </Reveal>
-        ) : (
-          <div className={styles.grid}>
-            {speakers.items.map((s, i) => (
-              <SpeakerCard
-                key={s.id}
-                speaker={s}
-                src={s.photo ? speakerImages[s.photo] : null}
-                slot={i}
-                delay={i * 0.12}
-              />
-            ))}
-          </div>
         )}
-      </div>
+      </Container>
     </section>
   )
 }

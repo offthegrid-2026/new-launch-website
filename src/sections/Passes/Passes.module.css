@@ -1,50 +1,30 @@
-.section {
-  position: relative;
-  height: calc(1435 * var(--u));
-  overflow: hidden;
-  background: var(--bg);
+.grid {
+  margin-top: var(--stack);
+  display: grid;
+  grid-template-columns: minmax(0, 400px);
+  justify-content: center;
+  grid-auto-flow: dense;
+  gap: clamp(20px, 2.4vw, 32px);
 }
 
-.stage {
-  height: 100%;
-}
-
-/* rows are layout-transparent on desktop; children use artboard coords */
-.topRow,
-.bottomRow {
-  display: contents;
-}
-
-@media (max-width: 900px) {
-  .section {
-    height: auto;
-    padding: 56px 16px 72px;
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .stage {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-
-  .topRow,
-  .bottomRow {
-    display: grid;
-    gap: 28px;
-  }
-
-  .topRow {
-    grid-template-columns: 1fr;
-  }
-
-  .bottomRow {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  .reasons {
+    grid-column: 1 / -1;
   }
 }
 
-@media (min-width: 640px) and (max-width: 900px) {
-  .topRow {
-    grid-template-columns: 1fr;
+/* desktop: first pass + reasons on top, the other three below */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .reasons {
+    grid-column: 2 / 4;
+    grid-row: 1;
   }
 }

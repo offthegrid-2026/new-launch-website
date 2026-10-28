@@ -1,7 +1,6 @@
-/* rows are 88.5px with a 1px #cb6ce6 rule, 1061.4px wide */
 .item {
   position: relative;
-  border-bottom: 1px solid var(--purple);
+  border-bottom: 1px solid rgba(203, 108, 230, 0.5);
 }
 
 /* glowing sweep along the rule on hover */
@@ -21,22 +20,25 @@
   transform: scaleX(1);
 }
 
+.heading {
+  font-weight: 400;
+}
+
 .head {
-  position: relative;
   display: flex;
   align-items: center;
+  gap: clamp(16px, 3vw, 48px);
   width: 100%;
-  min-height: calc(88.53 * var(--u));
+  min-height: 64px;
+  padding-block: 14px;
   text-align: left;
 }
 
 .sign {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: calc(25 * var(--u));
-  height: calc(25 * var(--u));
-  margin-top: calc(-12.5 * var(--u));
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
 }
 
 .bar {
@@ -44,8 +46,8 @@
   left: 0;
   top: 50%;
   width: 100%;
-  height: calc(4.2 * var(--u));
-  margin-top: calc(-2.1 * var(--u));
+  height: 3px;
+  margin-top: -1.5px;
   background: var(--white);
   transition:
     transform 0.4s var(--ease-out),
@@ -61,17 +63,10 @@
   opacity: 0;
 }
 
-/* the minus in the design is shorter than the plus */
-.open .bar:first-child {
-  transform: scaleX(0.68);
-  transform-origin: left center;
-}
-
 .q {
-  margin-left: calc(96 * var(--u));
   font-family: var(--font-display);
-  font-size: calc(26.67 * var(--u));
-  line-height: 1.28;
+  font-size: var(--step-1);
+  line-height: 1.3;
   letter-spacing: 0.02em;
   color: var(--white);
   transition: color 0.3s;
@@ -81,54 +76,56 @@
   color: var(--lilac);
 }
 
+/* height animates via grid rows; closed panels are also visibility:hidden */
 .panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.45s var(--ease-out),
+    visibility 0s linear 0.45s;
+}
+
+.open .panel {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 0.45s var(--ease-out),
+    visibility 0s;
+}
+
+.clip {
   overflow: hidden;
 }
 
 .answer {
-  padding: calc(0 * var(--u)) 0 calc(42 * var(--u)) calc(96 * var(--u));
-  margin-top: calc(-0.3 * var(--u));
-  max-width: calc((825 + 96) * var(--u));
-  font-family: var(--font-body);
-  font-size: calc(21.29 * var(--u));
-  line-height: 1.12;
+  max-width: var(--measure);
+  padding: 0 0 24px calc(18px + clamp(16px, 3vw, 48px));
+  font-size: var(--step-0);
+  line-height: 1.5;
   color: var(--text-muted);
-  white-space: pre-line;
 }
 
-.answer p + p {
-  margin-top: calc(23.85 * var(--u));
+.answer > * + * {
+  margin-top: 0.75em;
 }
 
-@media (max-width: 900px) {
-  .head {
-    min-height: 72px;
-    padding: 16px 0;
-  }
+.answer strong {
+  font-weight: 700;
+  color: var(--white);
+}
 
-  .sign {
-    width: 18px;
-    height: 18px;
-    margin-top: -9px;
-  }
+.bullets {
+  padding-left: 1.2em;
+  list-style: disc;
+}
 
-  .bar {
-    height: 3px;
-    margin-top: -1.5px;
-  }
+.link {
+  color: var(--lilac);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
-  .q {
-    margin-left: 40px;
-    font-size: 20px;
-  }
-
-  .answer {
-    padding: 0 0 24px 40px;
-    max-width: none;
-    font-size: 16px;
-  }
-
-  .answer p + p {
-    margin-top: 14px;
-  }
+.link:hover {
+  color: var(--white);
 }

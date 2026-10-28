@@ -1,120 +1,84 @@
-/* frames: 347 × 416.9 at y = 211, x = 127.2 / 509.7 / 892.2, corner 30 */
 .card {
-  position: absolute;
-  top: calc(210.95 * var(--u));
-  width: calc(347.05 * var(--u));
-  perspective: 800px;
-}
-
-.card[data-slot='0'] { left: calc(127.19 * var(--u)); }
-.card[data-slot='1'] { left: calc(509.72 * var(--u)); }
-.card[data-slot='2'] { left: calc(892.24 * var(--u)); }
-
-.frame {
   position: relative;
-  height: calc(416.88 * var(--u));
-  border-radius: calc(30 * var(--u));
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(140, 110, 255, 0.45);
+  background: linear-gradient(180deg, #120d22, #0c0a18);
   overflow: hidden;
   transition:
     transform 0.5s var(--ease-out),
     box-shadow 0.5s var(--ease-out);
 }
 
-.card:hover .frame {
-  transform: translateY(calc(-8 * var(--u)));
-  box-shadow: 0 calc(24 * var(--u)) calc(50 * var(--u)) rgba(203, 108, 230, 0.25);
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px rgba(203, 108, 230, 0.22);
 }
 
-/* the speaker photo is cropped flush on its lower corners in Canva */
-.card[data-slot='0'] .frame {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+.frame {
+  aspect-ratio: 682 / 727;
+  overflow: hidden;
 }
 
 .photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  animation: kenburns 14s ease-in-out infinite alternate;
+  transition: transform 0.8s var(--ease-out);
 }
 
-@keyframes kenburns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.07) translate(-1.5%, -1%);
-  }
+.card:hover .photo {
+  transform: scale(1.04);
 }
 
-.empty {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.cloud {
-  animation: cloud 9s ease-in-out infinite alternate;
-}
-
-@keyframes cloud {
-  to {
-    transform: translateX(26px);
-  }
-}
-
-/* #cccccc info plate overlapping the photo by 11px, corner 19 */
 .info {
   position: relative;
-  margin-top: calc(-11.35 * var(--u));
-  height: calc(215.87 * var(--u));
-  border-radius: calc(19 * var(--u));
-  background: #cccccc;
-  padding: calc(24 * var(--u));
-  color: #0b0c0d;
+  flex: 1;
+  padding: clamp(20px, 2.4vw, 32px);
+  padding-right: calc(clamp(20px, 2.4vw, 32px) + 44px);
 }
 
 .name {
   font-family: var(--font-display);
-  font-size: calc(26 * var(--u));
-  font-weight: 400;
+  font-weight: 700;
+  font-size: var(--step-3);
+  line-height: 1.05;
 }
 
-.role {
-  margin-top: calc(6 * var(--u));
-  font-family: var(--font-body);
-  font-size: calc(16 * var(--u));
+.name span {
+  display: block;
 }
 
-@media (max-width: 900px) {
-  .card,
-  .card[data-slot] {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    max-width: 347px;
-    margin: 0 auto;
-  }
+.roles {
+  margin-top: 1.2em;
+  font-size: var(--step--2);
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 
-  .frame {
-    height: auto;
-    aspect-ratio: 347 / 417;
-    border-radius: 26px;
-  }
+.roles li::before {
+  content: '// ';
+}
 
-  .info {
-    height: 160px;
-    margin-top: -10px;
-    border-radius: 18px;
-    padding: 20px;
-  }
+.arrow {
+  position: absolute;
+  right: clamp(20px, 2.4vw, 32px);
+  bottom: clamp(20px, 2.4vw, 32px);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--white);
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease-out);
+}
 
-  .name {
-    font-size: 24px;
-  }
+.arrow svg {
+  width: 18px;
+}
 
-  .role {
-    font-size: 15px;
-  }
+.card:hover .arrow {
+  transform: translateX(4px);
 }

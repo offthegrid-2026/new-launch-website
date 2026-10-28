@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { reasons } from '../../data/content'
+import { reasons } from '../../content/site'
 import BorderBeam from '../../components/BorderBeam/BorderBeam'
 import RichText from '../../components/RichText/RichText'
 import styles from './ReasonsPanel.module.css'
@@ -11,36 +11,29 @@ function trackPointer(e) {
   e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`)
 }
 
-export default function ReasonsPanel() {
+export default function ReasonsPanel({ className = '' }) {
   return (
     <motion.div
-      className={`gradient-outline ${styles.panel}`}
+      className={`gradient-outline ${styles.panel} ${className}`}
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
       <BorderBeam duration={9} />
-      <h2 className={styles.title}>
+      <h3 className={styles.title}>
         <RichText segments={reasons.title} hlClassName={styles.accent} />
-      </h2>
+      </h3>
 
       <ol className={styles.list}>
-        {reasons.items.map((r, i) => (
-          <motion.li
-            key={r.n}
-            className={styles.tile}
-            data-i={i}
-            onPointerMove={trackPointer}
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.7, delay: 0.25 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className={styles.num}>{r.n}</span>
-            <h3 className={styles.tileTitle}>{r.title}</h3>
+        {reasons.items.map((r) => (
+          <li key={r.n} className={styles.tile} onPointerMove={trackPointer}>
+            <span className={styles.num} aria-hidden="true">
+              {r.n}
+            </span>
+            <h4 className={styles.tileTitle}>{r.title}</h4>
             <p className={styles.body}>{r.body}</p>
-          </motion.li>
+          </li>
         ))}
       </ol>
     </motion.div>

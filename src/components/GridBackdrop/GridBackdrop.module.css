@@ -1,13 +1,10 @@
+/* one fixed tunnel grid behind the whole page, so no section ever shows a seam */
 .wrap {
-  position: absolute;
-  left: 50%;
-  top: calc(var(--top) * var(--u));
-  width: calc(1379 * var(--u));
-  height: calc(827 * var(--u));
-  transform: translateX(-50%);
-  opacity: var(--o);
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.05;
   pointer-events: none;
-  overflow: hidden;
 }
 
 .grid {

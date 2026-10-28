@@ -11,7 +11,7 @@ import styles from './BrushText.module.css'
 export default function BrushText({ as = 'p', children, box, className = '', duration = 1.4, delay = 0 }) {
   const Tag = motion[as]
   return (
-    <motion.div
+    <motion.span
       className={`${styles.box} ${className}`}
       style={{
         '--l': box.left,
@@ -35,6 +35,6 @@ export default function BrushText({ as = 'p', children, box, className = '', dur
       >
         {children}
       </Tag>
-    </motion.div>
+    </motion.span>
   )
 }

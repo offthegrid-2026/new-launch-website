@@ -1,0 +1,5 @@
+.container {
+  position: relative;
+  width: min(100% - 2 * var(--page-gutter), var(--page-max));
+  margin-inline: auto;
+}

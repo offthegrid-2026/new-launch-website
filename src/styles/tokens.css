@@ -1,13 +1,9 @@
 /*
- * Design tokens — every value is lifted from the Canva file "OTG Website Design".
- * The artboard is 1366px wide; `--u` is one artboard pixel, so
- * `calc(56 * var(--u))` renders exactly 56px at 1366px viewport width
- * and scales fluidly around it.
+ * Design tokens. Colours and fonts are lifted from the Canva file "OTG Website Design";
+ * layout and type are normalised (see design/design-tokens.md).
+ * Fluid values interpolate between a 360px and a 1440px viewport.
  */
 :root {
-  --artboard: 1366;
-  --u: calc(min(100vw, 1600px) / var(--artboard));
-
   /* surfaces */
   --bg: #0b0c0d;
   --card-from: #13091c;
@@ -30,6 +26,7 @@
   --violet: #8c52ff;
   --amber: #ff7b1b;
   --brand-gradient: linear-gradient(90deg, var(--violet), var(--amber));
+  --outline-gradient: linear-gradient(90deg, #a75df4, #e97572);
 
   /* reason tiles (top → bottom) */
   --tile-1: #0e0621;
@@ -37,19 +34,39 @@
   --tile-3: #150b2c;
   --tile-4: #1c0f3a;
 
-  /* type */
+  /* fonts */
   --font-display: 'Loubag', 'Times New Roman', serif;
   --font-body: 'Helvetica Now Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-ui: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   --font-script: 'Feeling Passionate', 'Brush Script MT', cursive;
 
+  /* fluid type scale */
+  --step--2: clamp(0.75rem, 0.729rem + 0.093vw, 0.8125rem); /* 12 → 13: tiny caps labels only */
+  --step--1: clamp(0.875rem, 0.85rem + 0.111vw, 0.95rem); /* 14 → 15.2: UI, buttons */
+  --step-0: clamp(1rem, 0.958rem + 0.185vw, 1.125rem); /* 16 → 18: body */
+  --step-1: clamp(1.125rem, 1.0625rem + 0.278vw, 1.3125rem); /* 18 → 21 */
+  --step-2: clamp(1.25rem, 1.125rem + 0.556vw, 1.625rem); /* 20 → 26 */
+  --step-3: clamp(1.4375rem, 1.25rem + 0.833vw, 2rem); /* 23 → 32 */
+  --step-4: clamp(1.6875rem, 1.417rem + 1.204vw, 2.5rem); /* 27 → 40 */
+  --step-5: clamp(1.9375rem, 1.5rem + 1.944vw, 3.25rem); /* 31 → 52 */
+  --step-script: clamp(3.5rem, 2.667rem + 3.704vw, 6rem); /* 56 → 96: brush headings */
+  --measure: 65ch;
+
+  /* layout: one gutter, one max width, one gap between sections */
+  --page-gutter: clamp(16px, 5vw, 80px);
+  --page-max: 1200px;
+  --section-gap: clamp(64px, 3.2rem + 5vw, 120px);
+  --stack: clamp(24px, 1rem + 2vw, 48px); /* heading → content inside a section */
+  --radius-lg: clamp(24px, 1rem + 2.2vw, 48px);
+  --radius-md: clamp(18px, 0.9rem + 0.8vw, 26px);
+
+  /* header + hero */
+  --logo-h: clamp(36px, 1.6rem + 2.4vw, 68px);
+  --header-pad: clamp(12px, 0.5rem + 1vw, 24px);
+  --header-h: calc(var(--logo-h) + 2 * var(--header-pad));
+  --hero-pad-top: calc(var(--header-h) + clamp(24px, 1rem + 3vw, 64px));
+  --hero-min-h: min(80svh, 760px);
+
   /* motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (max-width: 900px) {
-  :root {
-    /* below tablet the layout reflows; --u becomes a gentle scale for type */
-    --u: calc(min(100vw, 900px) / 900);
-  }
 }

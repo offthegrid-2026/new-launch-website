@@ -39,10 +39,10 @@ function tunnelPaths() {
 
 const D = tunnelPaths()
 
-/** Full-width tunnel grid that slowly "breathes" forward on a loop. */
-export default function GridBackdrop({ opacity = 0.05, top = 0 }) {
+/** Page-wide tunnel grid that slowly "breathes" forward on a loop. Render once. */
+export default function GridBackdrop() {
   return (
-    <div aria-hidden="true" className={styles.wrap} style={{ '--o': opacity, '--top': top }}>
+    <div aria-hidden="true" className={styles.wrap}>
       <svg className={styles.grid} viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
         <path d={D} />
       </svg>

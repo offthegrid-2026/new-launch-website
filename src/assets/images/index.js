@@ -1,23 +1,16 @@
-// Central image registry. Everything here was cropped from the Canva export;
-// to swap in an original, replace the file and keep the same name.
+// Central image registry. Raster assets are cropped from the Canva exports by
+// scripts/export-design-assets.mjs; to swap in an original, keep the same name.
 import logo from './logo.webp'
-import passFirst from './pass-first.webp'
-import passMany from './pass-many.webp'
-import passLast from './pass-last.webp'
-import passElite from './pass-elite.webp'
-import speaker1 from './speaker-1.webp'
+import eye from './why/layer3.webp'
+import bees from './schedule/bees.webp'
+import sphere from './schedule/sphere.webp'
 
-export const images = {
-  logo,
-}
+export const images = { logo, eye, bees, sphere }
 
-export const passImages = {
-  first: passFirst,
-  many: passMany,
-  last: passLast,
-  elite: passElite,
-}
+const glob = (files) =>
+  Object.fromEntries(Object.entries(files).map(([path, url]) => [path.split('/').pop().replace('.webp', ''), url]))
 
-export const speakerImages = {
-  'speaker-1': speaker1,
-}
+// keyed by file name: speakers['paul-sandip'], passes['first-front'], venuePhotos.map
+export const speakerImages = glob(import.meta.glob('./speakers/*.webp', { eager: true, import: 'default' }))
+export const passImages = glob(import.meta.glob('./passes/*.webp', { eager: true, import: 'default' }))
+export const venuePhotos = glob(import.meta.glob('./venue/{building,map,gate}.webp', { eager: true, import: 'default' }))
