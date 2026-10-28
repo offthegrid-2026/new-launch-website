@@ -50,6 +50,7 @@
 .partOf {
   font-family: var(--font-ui);
   font-size: var(--step--2);
+  line-height: 1.5;
   text-transform: uppercase;
 }
 
@@ -141,8 +142,15 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  /* a little larger, and dropped so its top lines up with the BEES logo, not the label above it */
   .brand {
     grid-column: 1;
+    height: clamp(56px, 6vw, 84px);
+    margin-top: calc(var(--step--2) * 1.5 + 6px);
+  }
+
+  .wordmark {
+    font-size: clamp(16px, 1.7vw, 24px);
   }
 
   .partOf {
