@@ -1,7 +1,6 @@
 // Delegate passes, from the Canva file "OTG PASS PORTRAIT (STORE)".
 // The card art is an image; `summary` and `inclusions` are its text for screen readers.
 // `cta` with `buy: true` links to REGISTER_URL; otherwise it renders as a status label.
-// `availableFrom` (passes not on sale yet) shows in a tooltip when the card is hovered.
 
 const OTG_EXPERIENCE = [
   'Main Stage Conversations',
@@ -27,7 +26,6 @@ export const passes = [
     // design reads "22 NOV" on the card art — see report
     summary: 'On Time delegate pass. ₹2,999 + 18% GST. Full-day access, 22 Nov. Opens 16 Nov, available till 05 Dec. Limited passes.',
     cta: { label: 'Opens 16 Nov' },
-    availableFrom: '16 Nov',
     dot: '#cb6ce6',
     inclusions: [{ heading: 'OTG Experience', items: OTG_EXPERIENCE }],
   },
@@ -36,7 +34,6 @@ export const passes = [
     name: 'The Last',
     summary: 'Late Arrivals delegate pass. ₹3,999 + 18% GST. Full-day access, 22 Nov. Opens 06 Dec, available till 11 Dec. Final limited access.',
     cta: { label: 'Opens 06 Dec' },
-    availableFrom: '06 Dec',
     dot: '#ff2e4d',
     inclusions: [{ heading: 'OTG Experience', items: OTG_EXPERIENCE }],
   },
