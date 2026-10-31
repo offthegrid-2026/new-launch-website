@@ -1,5 +1,6 @@
 /* no band: the footer sits on the page background, lifted by a soft violet haze */
 .footer {
+  --bees-w: clamp(130px, 11vw, 160px);
   position: relative;
   padding-block: var(--stack) calc(var(--stack) * 0.75);
 }
@@ -28,7 +29,6 @@
 .logo {
   height: 100%;
   width: auto;
-  mix-blend-mode: lighten;
 }
 
 .divider {
@@ -55,8 +55,9 @@
 }
 
 .partOf img {
+  display: block;
   margin-top: 6px;
-  width: clamp(130px, 11vw, 160px);
+  width: var(--bees-w);
 }
 
 .heading {
@@ -142,11 +143,12 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* a little larger, and dropped so its top lines up with the BEES logo, not the label above it */
+  /* a little larger, and dropped past the label so its centre lines up with the BEES logo's (440x188) */
   .brand {
+    --brand-h: clamp(56px, 6vw, 84px);
     grid-column: 1;
-    height: clamp(56px, 6vw, 84px);
-    margin-top: calc(var(--step--2) * 1.5 + 6px);
+    height: var(--brand-h);
+    margin-top: calc(var(--step--2) * 1.5 + 6px + (var(--bees-w) * 188 / 440 - var(--brand-h)) / 2);
   }
 
   .wordmark {

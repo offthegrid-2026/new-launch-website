@@ -59,7 +59,7 @@ export default function Hero() {
           <PillButton href={ctas.delegate.href} color="var(--lilac)">
             {ctas.delegate.label}
           </PillButton>
-          <PillButton href={ctas.partner.href} color="var(--orange)">
+          <PillButton href={ctas.partner.href} data-enquiry={ctas.partner.enquiry} color="var(--orange)">
             {ctas.partner.label}
           </PillButton>
         </motion.div>

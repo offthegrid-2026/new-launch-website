@@ -1,6 +1,6 @@
 // Site copy, in page order. FAQs, speakers and passes have their own files.
 // Segments marked { hl: true } render in the highlight colour.
-import { REGISTER_URL, PARTNER_URL, PROSPECTUS_URL, TERMS_URL, PRIVACY_URL, CODE_OF_CONDUCT_URL } from '../config/links'
+import { PASSES_URL, CONTACT_URL, PROSPECTUS_URL, TERMS_URL, PRIVACY_URL, CODE_OF_CONDUCT_URL } from '../config/links'
 
 export const nav = {
   links: [
@@ -15,8 +15,8 @@ export const nav = {
 }
 
 export const ctas = {
-  delegate: { label: 'Apply for Delegate Pass', href: REGISTER_URL },
-  partner: { label: 'Partner with Us', href: PARTNER_URL },
+  delegate: { label: 'Apply for Delegate Pass', href: PASSES_URL },
+  partner: { label: 'Partner with Us', href: CONTACT_URL, enquiry: 'partner' },
   prospectus: { label: 'Download Partnership Prospectus', href: PROSPECTUS_URL },
 }
 
@@ -160,6 +160,28 @@ export const faqSection = {
   script: 'FAQs',
 }
 
+export const contactForm = {
+  script: 'Reach out',
+  heading: 'Send us a message',
+  intro: 'Tell us what you’re looking for and the right person from the OTG team will get back to you.',
+  enquiryLabel: 'Nature of Enquiry',
+  formHeading: 'Your Details',
+  formIntro: 'Fields marked * are required.',
+  // `key` is what links use to pre-select an option (see enquiryHref in config/links.js)
+  enquiries: [
+    { key: 'general', label: 'General Enquiry' },
+    { key: 'partner', label: 'Partner with us' },
+    { key: 'premium', label: 'Enquire for Premium Pass' },
+    { key: 'speaker', label: 'Enquire for Speaker' },
+    { key: 'media', label: 'Media & Press' },
+  ],
+  submit: 'Submit Message',
+  sending: 'Sending…',
+  sent: 'Thank you, your message is on its way. We’ll get back to you soon.',
+  error: 'Something went wrong sending your message. Please try again, or email us at',
+  mailOpened: 'Your email app should now open with your message ready. Just press send.',
+}
+
 export const footer = {
   partOf: 'Part of the',
   contact: {
@@ -172,9 +194,9 @@ export const footer = {
   quickLinks: {
     heading: 'Quick Links',
     links: [
-      { label: 'Terms of Use', href: TERMS_URL },
+      { label: 'Terms & Conditions', href: TERMS_URL },
       { label: 'Privacy Policy', href: PRIVACY_URL },
-      { label: 'Code of Conduct', href: CODE_OF_CONDUCT_URL, id: 'code-of-conduct' },
+      { label: 'Code of Conduct', href: CODE_OF_CONDUCT_URL },
     ],
   },
   copyright: '© 2026 Off The Grid Design Summit. All Rights Reserved.',

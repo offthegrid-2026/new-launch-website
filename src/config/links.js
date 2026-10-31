@@ -1,18 +1,32 @@
 // Every outbound / CTA destination on the site lives here.
 // Values starting with '#' are in-page anchors used until the real page exists.
 
-// all Register / Buy / Apply buttons
+// the passes' Buy buttons
 export const REGISTER_URL = '/register'
 
-export const PARTNER_URL = 'mailto:outreach@otgsummit.com?subject=Partnering%20with%20Off%20The%20Grid'
+// Apply for Delegate Pass: the passes section on the home page
+export const PASSES_URL = '#passes'
 
-// TODO(client): real destinations not supplied yet
-export const PROSPECTUS_URL = '#partners'
-export const BECOME_SPEAKER_URL = '#contact'
-export const CONTACT_URL = '#contact'
-export const CODE_OF_CONDUCT_URL = '#code-of-conduct'
-export const TERMS_URL = '#terms'
-export const PRIVACY_URL = '#privacy'
+export const PROSPECTUS_URL = '/downloads/otg-partnership-prospectus.pdf'
+
+// legal pages: separate HTML entries (see vite.config.js), content in content/legal.js
+export const TERMS_URL = '/terms/'
+export const PRIVACY_URL = '/privacy/'
+export const CODE_OF_CONDUCT_URL = '/code-of-conduct/'
+
+// "Reach out" form below the FAQs. With no endpoint it opens the visitor's mail app,
+// addressed to `email`, with the message filled in. To receive submissions directly,
+// paste a form-service URL that accepts a POSTed form (e.g. Formspree) as `endpoint`.
+export const CONTACT_FORM = {
+  endpoint: '',
+  email: 'outreach@otgsummit.com',
+}
+
+export const CONTACT_URL = '#reach-out'
+
+// a link to the form with an enquiry type chosen (keys: contactForm.enquiries in content/site.js).
+// Links carry the key as data-enquiry; from another page (`home` = '/') it travels as ?enquiry=.
+export const enquiryHref = (key, home = '') => (home ? `${home}?enquiry=${key}` : '') + CONTACT_URL
 
 export const MAP_URL = 'https://www.google.com/maps/search/?api=1&query=New+Town+Convention+Centre+Kolkata'
 
@@ -32,9 +46,10 @@ export const SPEAKER_LINKS = {
   'charbak-dipta': { instagram: '', linkedin: '' },
 }
 
-// named links that FAQ answers can reference with { t, link: '<key>' }
+// named links that FAQ answers can reference with { t, link: '<key>' }.
+// A value is an href, or { enquiry } to open the reach-out form with that enquiry type chosen.
 export const NAMED_LINKS = {
-  becomeSpeaker: BECOME_SPEAKER_URL,
+  becomeSpeaker: { enquiry: 'speaker' },
   contactUs: CONTACT_URL,
   codeOfConduct: CODE_OF_CONDUCT_URL,
 }

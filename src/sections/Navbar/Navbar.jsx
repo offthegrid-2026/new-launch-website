@@ -5,7 +5,8 @@ import { images } from '../../assets/images'
 import Container from '../../components/Container/Container'
 import styles from './Navbar.module.css'
 
-export default function Navbar() {
+// `home` prefixes the in-page anchors, so pages other than the home page pass '/'.
+export default function Navbar({ home = '' }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -27,8 +28,8 @@ export default function Navbar() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <Container className={styles.bar}>
-        <a href="#top" className={styles.brand} aria-label="Off The Grid Design Summit 2026, back to top">
-          <img src={images.logo} alt="" className={styles.logo} width="138" height="95" />
+        <a href={`${home}#top`} className={styles.brand} aria-label={`Off The Grid Design Summit 2026, ${home ? 'home' : 'back to top'}`}>
+          <img src={images.logo} alt="" className={styles.logo} width="138" height="92" />
           <span className={styles.divider} />
           <span className={styles.wordmark} aria-hidden="true">
             {nav.wordmark.map((w) => (
@@ -39,7 +40,7 @@ export default function Navbar() {
 
         <nav className={styles.links} aria-label="Primary">
           {nav.links.map((l) => (
-            <a key={l.label} href={l.href} className={styles.link}>
+            <a key={l.label} href={home + l.href} className={styles.link}>
               {l.label}
             </a>
           ))}
@@ -70,7 +71,7 @@ export default function Navbar() {
             {nav.links.map((l, i) => (
               <motion.a
                 key={l.label}
-                href={l.href}
+                href={home + l.href}
                 onClick={() => setOpen(false)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

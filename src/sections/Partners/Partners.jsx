@@ -22,10 +22,10 @@ export default function Partners() {
             ))}
           </Reveal>
           <Reveal className={styles.actions} delay={0.15}>
-            <PillButton href={ctas.partner.href} color="var(--orange)">
+            <PillButton href={ctas.partner.href} data-enquiry={ctas.partner.enquiry} color="var(--orange)">
               {ctas.partner.label}
             </PillButton>
-            <PillButton href={ctas.prospectus.href} color="var(--purple)">
+            <PillButton href={ctas.prospectus.href} color="var(--purple)" download>
               {ctas.prospectus.label}
             </PillButton>
           </Reveal>
