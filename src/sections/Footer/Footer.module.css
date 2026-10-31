@@ -146,7 +146,7 @@
   .brand {
     grid-column: 1;
     height: clamp(56px, 6vw, 84px);
-    margin-top: calc(var(--step--2) * 1.5 + 6px);
+    margin-top: calc(var(--step--2) * 1.5 - 4px);
   }
 
   .wordmark {
