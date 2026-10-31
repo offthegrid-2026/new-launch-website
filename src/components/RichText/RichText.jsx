@@ -1,4 +1,4 @@
-import { NAMED_LINKS } from '../../config/links'
+import { NAMED_LINKS, enquiryHref } from '../../config/links'
 
 /**
  * Renders [{ t, hl, strong, link }] segments.
@@ -9,8 +9,9 @@ export default function RichText({ segments, hlClassName, linkClassName }) {
     let node = s.t
     if (s.strong) node = <strong>{node}</strong>
     if (s.link) {
+      const { enquiry } = NAMED_LINKS[s.link]
       return (
-        <a key={i} href={NAMED_LINKS[s.link]} className={linkClassName}>
+        <a key={i} href={enquiry ? enquiryHref(enquiry) : NAMED_LINKS[s.link]} data-enquiry={enquiry} className={linkClassName}>
           {node}
         </a>
       )

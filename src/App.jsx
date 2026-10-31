@@ -11,6 +11,7 @@ import Schedule from './sections/Schedule/Schedule'
 import Passes from './sections/Passes/Passes'
 import Venue from './sections/Venue/Venue'
 import Faq from './sections/Faq/Faq'
+import ContactForm from './sections/ContactForm/ContactForm'
 import Footer from './sections/Footer/Footer'
 
 // Section order follows the Canva file "OTG WEBSITE DESIGN".
@@ -31,6 +32,7 @@ export default function App() {
         <Passes />
         <Venue />
         <Faq />
+        <ContactForm />
       </main>
       <Footer />
     </MotionConfig>

@@ -1,6 +1,6 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa'
 import { footer, ctas, nav } from '../../content/site'
-import { SOCIALS } from '../../config/links'
+import { SOCIALS, enquiryHref } from '../../config/links'
 import { images } from '../../assets/images'
 import Container from '../../components/Container/Container'
 import PillButton from '../../components/PillButton/PillButton'
@@ -14,13 +14,14 @@ const icons = {
   youtube: FaYoutube,
 }
 
-export default function Footer() {
+// `home` is '/' on pages other than the home page, so the action buttons find their sections.
+export default function Footer({ home = '' }) {
   const { contact, quickLinks } = footer
   return (
     <footer className={styles.footer}>
       <Container className={styles.grid}>
         <div className={styles.brand}>
-          <img src={images.logo} alt="Off The Grid" className={styles.logo} width="138" height="95" loading="lazy" />
+          <img src={images.logo} alt="Off The Grid" className={styles.logo} width="138" height="92" loading="lazy" />
           <span className={styles.divider} aria-hidden="true" />
           <span className={styles.wordmark} aria-hidden="true">
             {nav.wordmark.map((w) => (
@@ -64,10 +65,10 @@ export default function Footer() {
         <Reveal className={styles.col} delay={0.1}>
           <h2 className={styles.heading}>{footer.actionsHeading}</h2>
           <div className={styles.actions}>
-            <PillButton href={ctas.delegate.href} color="var(--white)">
+            <PillButton href={home + ctas.delegate.href} color="var(--white)">
               {ctas.delegate.label}
             </PillButton>
-            <PillButton href={ctas.partner.href} color="var(--orange)">
+            <PillButton href={enquiryHref(ctas.partner.enquiry, home)} data-enquiry={ctas.partner.enquiry} color="var(--orange)">
               {ctas.partner.label}
             </PillButton>
           </div>
@@ -78,7 +79,7 @@ export default function Footer() {
           <ul className={styles.links}>
             {quickLinks.links.map((l) => (
               <li key={l.label}>
-                <a href={l.href} id={l.id}>
+                <a href={l.href}>
                   {l.label}
                 </a>
               </li>
