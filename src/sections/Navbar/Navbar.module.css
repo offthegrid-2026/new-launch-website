@@ -42,6 +42,7 @@
 .logo {
   height: 100%;
   width: auto;
+  aspect-ratio: 1768 / 1183;
 }
 
 .divider {

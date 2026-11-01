@@ -1,11 +1,10 @@
 // Central image registry. Raster assets are cropped from the Canva exports by
 // scripts/export-design-assets.mjs; to swap in an original, keep the same name.
-import logo from './logo.webp'
 import eye from './why/layer3.webp'
 import bees from './schedule/bees.webp'
 import sphere from './schedule/sphere.webp'
 
-export const images = { logo, eye, bees, sphere }
+export const images = { eye, bees, sphere }
 
 const glob = (files) =>
   Object.fromEntries(Object.entries(files).map(([path, url]) => [path.split('/').pop().replace('.webp', ''), url]))

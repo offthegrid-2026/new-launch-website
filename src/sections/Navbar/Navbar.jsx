@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { nav } from '../../content/site'
-import { images } from '../../assets/images'
 import Container from '../../components/Container/Container'
+import OtgLogo from '../../components/OtgLogo/OtgLogo'
 import styles from './Navbar.module.css'
 
 // `home` prefixes the in-page anchors, so pages other than the home page pass '/'.
@@ -29,7 +29,7 @@ export default function Navbar({ home = '' }) {
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <Container className={styles.bar}>
         <a href={`${home}#top`} className={styles.brand} aria-label={`Off The Grid Design Summit 2026, ${home ? 'home' : 'back to top'}`}>
-          <img src={images.logo} alt="" className={styles.logo} width="138" height="92" />
+          <OtgLogo className={styles.logo} />
           <span className={styles.divider} />
           <span className={styles.wordmark} aria-hidden="true">
             {nav.wordmark.map((w) => (
