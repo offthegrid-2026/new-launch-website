@@ -1,5 +1,5 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa'
-import { footer, ctas, nav } from '../../content/site'
+import { footer, ctas } from '../../content/site'
 import { SOCIALS, enquiryHref } from '../../config/links'
 import { images } from '../../assets/images'
 import Container from '../../components/Container/Container'
@@ -20,16 +20,6 @@ export default function Footer({ home = '' }) {
   return (
     <footer className={styles.footer}>
       <Container className={styles.grid}>
-        <div className={styles.brand}>
-          <img src={images.logo} alt="Off The Grid" className={styles.logo} width="138" height="92" loading="lazy" />
-          <span className={styles.divider} aria-hidden="true" />
-          <span className={styles.wordmark} aria-hidden="true">
-            {nav.wordmark.map((w) => (
-              <span key={w}>{w}</span>
-            ))}
-          </span>
-        </div>
-
         <div className={styles.partOf}>
           <p>{footer.partOf}</p>
           <img src={images.bees} alt="Bengal Education & Employment Summit 2026" width="440" height="188" loading="lazy" />

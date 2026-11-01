@@ -10,7 +10,16 @@
   text-align: center;
 }
 
-/* glass stars hang over the card corners */
+/* glass stars hang over the card corners, clipped inside its border so the blue one's sway stays in */
+.stars {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
 .star {
   position: absolute;
   z-index: 2;
@@ -23,7 +32,6 @@
   top: 0;
   width: clamp(64px, 12vw, 170px);
   /* the art is pre-clipped to the card corner */
-  border-top-left-radius: var(--radius-lg);
   animation: pulseRed 6s ease-in-out 1.4s infinite;
 }
 

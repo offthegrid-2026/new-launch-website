@@ -29,24 +29,26 @@ export default function Theme() {
         <Reveal from="zoom" amount={0.15} duration={1.1} className={styles.card}>
           <BorderBeam duration={10} />
 
-          <motion.img
-            src={starRed}
-            alt=""
-            className={`${styles.star} ${styles.starRed}`}
-            initial={{ opacity: 0, scale: 0.7 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={inView}
-            transition={{ duration: 1.2, delay: 0.2, ease }}
-          />
-          <motion.img
-            src={starBlue}
-            alt=""
-            className={`${styles.star} ${styles.starBlue}`}
-            initial={{ opacity: 0, rotate: 30, scale: 0.6 }}
-            whileInView={{ opacity: 1, rotate: 0, scale: 1 }}
-            viewport={inView}
-            transition={{ duration: 1.2, delay: 0.35, ease }}
-          />
+          <div className={styles.stars} aria-hidden="true">
+            <motion.img
+              src={starRed}
+              alt=""
+              className={`${styles.star} ${styles.starRed}`}
+              initial={{ opacity: 0, scale: 0.7 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={inView}
+              transition={{ duration: 1.2, delay: 0.2, ease }}
+            />
+            <motion.img
+              src={starBlue}
+              alt=""
+              className={`${styles.star} ${styles.starBlue}`}
+              initial={{ opacity: 0, rotate: 30, scale: 0.6 }}
+              whileInView={{ opacity: 1, rotate: 0, scale: 1 }}
+              viewport={inView}
+              transition={{ duration: 1.2, delay: 0.35, ease }}
+            />
+          </div>
 
           <h2 id="theme-title" className={styles.heading}>
             <Reveal as="span" className={styles.eyebrow} delay={0.2}>

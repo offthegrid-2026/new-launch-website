@@ -6,18 +6,7 @@
 }
 
 .more {
-  /* shrink to the words so the gradient spans them, not the page */
-  width: fit-content;
-  margin: var(--stack) auto 0;
-  text-align: center;
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: var(--step-2);
-  line-height: 1.3;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, var(--rust), var(--purple));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--stack);
 }

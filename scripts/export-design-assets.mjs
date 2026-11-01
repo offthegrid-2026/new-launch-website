@@ -35,11 +35,11 @@ async function main() {
     await crop(MAIN, { left, top: 16420, width: 728, height: 878 }).resize(640).webp({ quality: 76 }).toFile(`${OUT}/venue/${name}.webp`)
   }
 
-  // schedule: BEES lockup and the 3D sphere
+  // schedule: BEES lockup, and the 3D sphere from its own transparent export
   await (await keyOutDark(crop(MAIN, { left: 330, top: 10118, width: 440, height: 188 }), 40, 90))
     .webp({ quality: 85 }).toFile(`${OUT}/schedule/bees.webp`)
-  await (await keyOutDark(crop(MAIN, { left: 2160, top: 10000, width: 572, height: 790 }), 45, 70))
-    .resize(420).webp({ quality: 78 }).toFile(`${OUT}/schedule/sphere.webp`)
+  const sphere = await sharp(`${EXPORTS}/schedule-graphic.png`).trim({ threshold: 1 }).toBuffer()
+  await sharp(sphere).resize(640).webp({ quality: 80 }).toFile(`${OUT}/schedule/sphere.webp`)
 
   // pass faces, cropped above the bottom bar (the bar is HTML)
   const faces = ['first-front', 'first-back', 'many-front', 'many-back', 'last-front', 'last-back', 'elite-front', 'elite-back']

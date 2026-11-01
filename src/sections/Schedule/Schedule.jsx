@@ -71,7 +71,7 @@ export default function Schedule() {
             ))}
           </Reveal>
 
-          <img src={images.sphere} alt="" width="420" height="580" loading="lazy" decoding="async" className={styles.sphere} />
+          <img src={images.sphere} alt="" width="640" height="617" loading="lazy" decoding="async" className={styles.sphere} />
 
           <Reveal as="table" className={styles.table} amount={0.15} delay={0.1}>
             <caption className="visually-hidden">Which passes include each day</caption>

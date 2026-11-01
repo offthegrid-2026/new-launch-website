@@ -1,7 +1,10 @@
 import { speakers } from '../../content/speakers'
+import { ctas } from '../../content/site'
+import { enquiryHref } from '../../config/links'
 import { speakerImages } from '../../assets/images'
 import Container from '../../components/Container/Container'
 import Glow from '../../components/Glow/Glow'
+import PillButton from '../../components/PillButton/PillButton'
 import Reveal from '../../components/Reveal/Reveal'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import SpeakerCard from './SpeakerCard'
@@ -20,11 +23,11 @@ export default function Speakers() {
           ))}
         </ul>
 
-        {speakers.more && (
-          <Reveal as="p" from="blur" className={styles.more} delay={0.2}>
-            {speakers.more}
-          </Reveal>
-        )}
+        <Reveal from="blur" className={styles.more} delay={0.2}>
+          <PillButton href={enquiryHref(ctas.speaker.enquiry)} data-enquiry={ctas.speaker.enquiry} color="var(--white)">
+            {ctas.speaker.label}
+          </PillButton>
+        </Reveal>
       </Container>
     </section>
   )
