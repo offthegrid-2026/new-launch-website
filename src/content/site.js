@@ -17,6 +17,7 @@ export const nav = {
 export const ctas = {
   delegate: { label: 'Apply for Delegate Pass', href: PASSES_URL },
   partner: { label: 'Partner with Us', href: CONTACT_URL, enquiry: 'partner' },
+  speaker: { label: 'Become a Speaker', enquiry: 'speaker' },
   prospectus: { label: 'Download Partnership Prospectus', href: PROSPECTUS_URL },
 }
 
@@ -177,7 +178,7 @@ export const contactForm = {
   ],
   submit: 'Submit Message',
   sending: 'Sending…',
-  sent: 'Thank you, your message is on its way. We’ll get back to you soon.',
+  sent: 'Thank you, your query has been submitted. A confirmation is on its way to your inbox.',
   error: 'Something went wrong sending your message. Please try again, or email us at',
   mailOpened: 'Your email app should now open with your message ready. Just press send.',
 }

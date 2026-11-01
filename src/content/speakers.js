@@ -6,7 +6,6 @@
 export const speakers = {
   script: 'Who’s speaking',
   heading: 'at Off The Grid ’26?',
-  more: 'More unveiling soon',
   items: [
     {
       id: 'paul-sandip',
