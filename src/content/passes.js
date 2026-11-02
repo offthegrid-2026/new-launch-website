@@ -25,7 +25,6 @@ export const passes = [
   {
     id: 'many',
     name: 'The Many',
-    // design reads "22 NOV" on the card art — see report
     summary: 'On Time delegate pass. ₹2,999 + 18% GST. Full-day access, 12 Dec. Opens 16 Nov, available till 05 Dec. Limited passes.',
     cta: { label: 'Opens 16 Nov' },
     dot: '#cb6ce6',
