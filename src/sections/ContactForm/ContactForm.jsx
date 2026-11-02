@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { contactForm } from '../../content/site'
+import { contactForm, footer } from '../../content/site'
 import { CONTACT_FORM } from '../../config/links'
 import eventPhoto from '../../assets/images/contact/photo.webp'
 import Container from '../../components/Container/Container'
@@ -7,19 +7,6 @@ import Glow from '../../components/Glow/Glow'
 import Reveal from '../../components/Reveal/Reveal'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
 import styles from './ContactForm.module.css'
-
-function mailtoFor(data) {
-  const subject = `${data.get('enquiry')}: ${data.get('name')}`
-  const body = [
-    data.get('message'),
-    '',
-    `Name: ${data.get('name')}`,
-    `Organisation / Institution: ${data.get('organisation') || '-'}`,
-    `Email: ${data.get('email')}`,
-    `Phone: ${data.get('phone') || '-'}`,
-  ].join('\n')
-  return `mailto:${CONTACT_FORM.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-}
 
 function Field({ label, required, wide, children }) {
   return (
@@ -70,12 +57,6 @@ export default function ContactForm() {
     e.preventDefault()
     const form = e.currentTarget
     const data = new FormData(form)
-
-    if (!CONTACT_FORM.endpoint) {
-      window.location.href = mailtoFor(data)
-      setStatus('mail')
-      return
-    }
 
     setStatus('sending')
     try {
@@ -141,10 +122,9 @@ export default function ContactForm() {
               </button>
               <p className={styles.status} role="status">
                 {status === 'sent' && contactForm.sent}
-                {status === 'mail' && contactForm.mailOpened}
                 {status === 'error' && (
                   <>
-                    {contactForm.error} <a href={`mailto:${CONTACT_FORM.email}`}>{CONTACT_FORM.email}</a>.
+                    {contactForm.error} <a href={`tel:${footer.contact.phone.replace(/\s/g, '')}`}>{footer.contact.phone}</a>.
                   </>
                 )}
               </p>

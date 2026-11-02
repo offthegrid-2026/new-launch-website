@@ -36,9 +36,28 @@ function devApi() {
   }
 }
 
+// Vite writes every imported image to dist even when the code that used it was dropped
+// (e.g. the whole site during maintenance, see src/main.jsx). Leave out the ones nothing links to.
+function dropUnusedAssets() {
+  return {
+    name: 'drop-unused-assets',
+    apply: 'build',
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      const files = Object.values(bundle)
+      const sources = files.map((f) => (f.type === 'chunk' ? f.code : String(f.source)))
+      for (const f of files) {
+        if (f.type !== 'asset' || /\.(html|css)$/.test(f.fileName)) continue
+        const name = f.fileName.split('/').pop()
+        if (!sources.some((src) => src.includes(name))) delete bundle[f.fileName]
+      }
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), devApi()],
+  plugins: [react(), devApi(), dropUnusedAssets()],
   build: {
     rollupOptions: {
       // home page plus the legal pages, each built to <dir>/index.html

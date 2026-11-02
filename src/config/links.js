@@ -14,13 +14,11 @@ export const TERMS_URL = '/terms/'
 export const PRIVACY_URL = '/privacy/'
 export const CODE_OF_CONDUCT_URL = '/code-of-conduct/'
 
-// "Reach out" form below the FAQs. With no endpoint it opens the visitor's mail app,
-// addressed to `email`, with the message filled in. `endpoint` is our own Vercel function
-// (api/contact.js), which forwards to the Google Apps Script that fills the Sheet and sends
-// the emails; the script's URL stays server-side in env vars (see .env.example).
+// "Reach out" form below the FAQs. `endpoint` is our own Vercel function (api/contact.js),
+// which forwards to the Google Apps Script that fills the Sheet and sends the emails;
+// the script's URL stays server-side in env vars (see .env.example).
 export const CONTACT_FORM = {
   endpoint: '/api/contact',
-  email: 'outreach@otgsummit.com',
 }
 
 export const CONTACT_URL = '#reach-out'

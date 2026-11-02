@@ -6,12 +6,17 @@
 //   APPS_SCRIPT_URL  the web app's /exec URL
 //   FORM_SECRET      must match FORM_SECRET in the script's Script Properties
 
+import { MAINTENANCE } from '../src/config/maintenance.js'
+
 const FIELDS = ['name', 'enquiry', 'organisation', 'email', 'phone', 'message']
 const MAX_BODY = 20_000 // bytes; the script caps each field more tightly
 
 const reply = (status, body) => Response.json(body, { status })
 
 export async function POST(request) {
+  // the site is down, so the form is too: nothing reaches the Sheet or the inbox
+  if (MAINTENANCE) return reply(503, { ok: false, error: 'Site under maintenance' })
+
   const { APPS_SCRIPT_URL, FORM_SECRET } = process.env
   if (!APPS_SCRIPT_URL || !FORM_SECRET) return reply(500, { ok: false, error: 'Form is not configured' })
 
