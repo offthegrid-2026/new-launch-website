@@ -179,8 +179,7 @@ export const contactForm = {
   submit: 'Submit Message',
   sending: 'Sending…',
   sent: 'Thank you, your query has been submitted. A confirmation is on its way to your inbox.',
-  error: 'Something went wrong sending your message. Please try again, or email us at',
-  mailOpened: 'Your email app should now open with your message ready. Just press send.',
+  error: 'Something went wrong sending your message. Please try again, or call us on',
 }
 
 export const footer = {
@@ -188,7 +187,6 @@ export const footer = {
   contact: {
     heading: 'Contact',
     phone: '+91 9836246175',
-    email: 'outreach@otgsummit.com',
     city: 'Kolkata, West Bengal',
   },
   actionsHeading: 'Actions',

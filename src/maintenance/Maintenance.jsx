@@ -138,7 +138,6 @@ export default function Maintenance() {
           <p className={styles.contact}>
             <span>Need us meanwhile?</span>
             <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
           </p>
           <ul className={styles.socials}>
             {SOCIALS.map((s) => {

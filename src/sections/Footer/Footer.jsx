@@ -29,7 +29,6 @@ export default function Footer({ home = '' }) {
           <h2 className={styles.heading}>{contact.heading}</h2>
           <p className={styles.lines}>
             <a href={`tel:${contact.phone.replace(/\s/g, '')}`}>{contact.phone}</a>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
           </p>
           <p className={styles.city}>{contact.city}</p>
           <ul className={styles.socials}>

@@ -1,13 +1,17 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
 import 'lenis/dist/lenis.css'
 import './styles/global.css'
-import App from './App.jsx'
-import Maintenance from './maintenance/Maintenance.jsx'
 import { MAINTENANCE } from './config/maintenance'
+
+// Only the page in use is imported, so a maintenance build ships none of the real site
+// and it can't be revealed from the browser.
+const Page = lazy(() => (MAINTENANCE ? import('./maintenance/Maintenance.jsx') : import('./App.jsx')))
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {MAINTENANCE ? <Maintenance /> : <App />}
+    <Suspense>
+      <Page />
+    </Suspense>
   </StrictMode>,
 )
