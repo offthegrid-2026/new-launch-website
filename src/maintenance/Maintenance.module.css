@@ -1,0 +1,322 @@
+.page {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: clip;
+  isolation: isolate;
+  padding-inline: var(--page-gutter);
+}
+
+.top {
+  padding-top: calc(var(--header-pad) * 2);
+}
+
+.logo {
+  display: block;
+  height: calc(var(--logo-h) * 1.15);
+  width: auto;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: clamp(24px, 0.5rem + 2.5vw, 48px);
+  max-width: 46rem;
+}
+
+/* brush word above the display line, as in SectionTitle */
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 400;
+}
+
+.script {
+  display: block;
+  font-family: var(--font-script);
+  font-size: min(var(--step-script), (100vw - 2 * var(--page-gutter)) / 4.6);
+  line-height: 1;
+  color: var(--rust);
+  white-space: nowrap;
+  transform: rotate(-5deg);
+  padding-inline: 0.1em;
+  animation: sway 6s ease-in-out 1.6s infinite;
+}
+
+.display {
+  display: block;
+  margin-top: -0.2em;
+  font-family: var(--font-display);
+  font-size: var(--step-5);
+  line-height: 1.1;
+  color: var(--white);
+}
+
+.lead {
+  margin-top: calc(var(--stack) * 0.75);
+  max-width: 34rem;
+  color: var(--text-muted);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: calc(var(--stack) * 0.75);
+  padding: 8px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: var(--card-gradient);
+  font-family: var(--font-ui);
+  font-size: var(--step--2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: ping 1.8s ease-out infinite;
+}
+
+/* full-bleed strip so the cables run off both edges of the screen */
+.stage {
+  width: 100vw;
+  margin-block: clamp(24px, 0.5rem + 2.5vw, 48px);
+}
+
+.plugs {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 90px;
+  max-height: 26vh;
+  overflow: visible;
+}
+
+/* phones: bigger plugs on a diagonal, filling the space down to the footer */
+@media (max-width: 640px) {
+  .stage {
+    position: relative;
+    flex: 1;
+    min-height: clamp(240px, 80vw, 360px);
+    margin-block: 8px;
+  }
+
+  .plugs {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 210vw;
+    max-height: none;
+    transform: translate(-50%, -50%) rotate(-32deg);
+  }
+}
+
+.cable {
+  fill: none;
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* a pulse of current running down each cable towards the plug */
+.current {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 26 260;
+  animation: flow 2.4s linear infinite;
+  filter: drop-shadow(0 0 6px currentColor);
+}
+
+.currentL {
+  color: var(--purple);
+  stroke: #e7c4ff;
+}
+
+.currentR {
+  color: var(--amber);
+  stroke: #ffd2a8;
+}
+
+/* the plugs reach in, almost touch, and pull back: never connecting */
+.plugL,
+.plugR {
+  animation: reach 3.2s var(--ease-out) infinite;
+}
+
+.plugR {
+  animation-name: reach-r;
+}
+
+.sparks {
+  stroke: #ffd2a8;
+  stroke-width: 3;
+  stroke-linecap: round;
+  fill: #fff;
+  opacity: 0;
+  transform-origin: 0 0;
+  animation: spark 3.2s ease-out infinite;
+}
+
+.sparks circle {
+  filter: drop-shadow(0 0 8px var(--amber));
+}
+
+.foot {
+  margin-top: auto;
+  width: 100%;
+  max-width: var(--page-max);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 32px;
+  padding-block: 20px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 24px;
+  color: var(--text-muted);
+}
+
+.contact a {
+  color: var(--white);
+  transition: color 0.3s;
+}
+
+.contact a:hover {
+  color: var(--lilac);
+}
+
+.socials {
+  display: flex;
+  gap: 4px;
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  font-size: 16px;
+  transition:
+    color 0.3s,
+    border-color 0.3s,
+    transform 0.3s var(--ease-out);
+}
+
+.social:hover {
+  color: var(--lilac);
+  border-color: var(--lilac);
+  transform: translateY(-2px);
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-6.6deg) translateY(-4px);
+  }
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+@keyframes flow {
+  from {
+    stroke-dashoffset: 286;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes reach {
+  0%,
+  100% {
+    transform: translateX(-14px);
+  }
+  42% {
+    transform: translateX(20px);
+  }
+  46% {
+    transform: translateX(17px);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+}
+
+@keyframes reach-r {
+  0%,
+  100% {
+    transform: translateX(14px);
+  }
+  42% {
+    transform: translateX(-20px);
+  }
+  46% {
+    transform: translateX(-17px);
+  }
+  50% {
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes spark {
+  0%,
+  38% {
+    opacity: 0;
+    transform: translate(600px, 120px) scale(0.6);
+  }
+  44% {
+    opacity: 1;
+    transform: translate(600px, 120px) scale(1.1);
+  }
+  52% {
+    opacity: 0.8;
+    transform: translate(600px, 120px) scale(0.9);
+  }
+  62%,
+  100% {
+    opacity: 0;
+    transform: translate(600px, 120px) scale(1.2);
+  }
+}
