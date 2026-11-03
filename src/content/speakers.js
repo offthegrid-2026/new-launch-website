@@ -43,7 +43,7 @@ export const speakers = {
     {
       id: 'anindya-bhanja-chowdhury',
       name: ['Anindya', 'Bhanja', 'Chowdhury'],
-      roles: ['IxDF Country Manager', 'Vice President of ADI', 'UI/UX Designer'],
+      roles: ['IxDF Country Manager', 'Vice President of ADI', 'UI/UX and Product Designer'],
       alt: 'Anindya Bhanja Chowdhury in dark-framed glasses and a black polo shirt',
       bio: [
         'Anindya Bhanja Chowdhury is the Country Manager of IxDF and Vice President of ADI.',
