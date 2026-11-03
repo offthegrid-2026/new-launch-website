@@ -42,6 +42,7 @@ export const SPEAKER_LINKS = {
   'paul-sandip': { linkedin: 'https://www.linkedin.com/in/paulsandipdesign/', website: 'https://paulstudio.in/' },
   'indroneel-mukherjee': { instagram: 'https://www.instagram.com/neely4u/', linkedin: 'https://www.linkedin.com/in/indroneel-mukherjee-320770219/' },
   'charbak-dipta': { instagram: 'https://www.instagram.com/charbak/', linkedin: 'https://www.linkedin.com/in/charbak-dipta/' },
+  'anindya-bhanja-chowdhury': { instagram: '', linkedin: '' },
 }
 
 // named links that FAQ answers can reference with { t, link: '<key>' }.

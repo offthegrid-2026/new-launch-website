@@ -1,8 +1,17 @@
+/* 2 × 2, kept narrow so the cards stay card-sized; one column on phones */
 .grid {
   margin-top: var(--stack);
+  margin-inline: auto;
+  max-width: 760px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  grid-template-columns: 1fr;
   gap: clamp(20px, 2.4vw, 32px);
+}
+
+@media (min-width: 560px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .more {
