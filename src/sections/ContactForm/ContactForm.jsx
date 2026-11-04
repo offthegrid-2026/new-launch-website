@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { contactForm, footer } from '../../content/site'
 import { CONTACT_FORM } from '../../config/links'
-import eventPhoto from '../../assets/images/contact/photo.webp'
+import eventPhoto from '../../assets/images/contact/otg-design-summit-kolkata-stage.webp'
 import Container from '../../components/Container/Container'
 import Glow from '../../components/Glow/Glow'
 import Reveal from '../../components/Reveal/Reveal'
@@ -26,7 +26,7 @@ function Field({ label, required, wide, children }) {
 
 /** Split card after temp/form-design-sample.png: event photo panel on the left, form on the right. */
 export default function ContactForm() {
-  // idle | sending | sent | mail | error
+  // idle | sending | sent | wait | error
   const [status, setStatus] = useState('idle')
   const select = useRef(null)
 
@@ -63,6 +63,8 @@ export default function ContactForm() {
       // url-encoded so the Apps Script web app reads it as e.parameter (it doesn't parse multipart)
       const res = await fetch(CONTACT_FORM.endpoint, { method: 'POST', body: new URLSearchParams(data) })
       const result = await res.json()
+      // the script's spam limit (same email within 5 min, same connection within 1 min)
+      if (/^Please wait/.test(result.error)) return setStatus('wait')
       if (!res.ok || !result.ok) throw new Error(result.error || res.statusText)
       form.reset()
       setStatus('sent')
@@ -79,7 +81,7 @@ export default function ContactForm() {
 
         <Reveal as="form" className={styles.card} onSubmit={onSubmit} amount={0.15}>
           <div className={styles.panel}>
-            <img src={eventPhoto} alt="" className={styles.photo} width="800" height="1071" loading="lazy" />
+            <img src={eventPhoto} alt="A panel on the Off The Grid Design Summit stage in Kolkata, in front of a packed audience" className={styles.photo} width="800" height="1071" loading="lazy" />
             <h3 className={styles.heading}>{contactForm.heading}</h3>
             <p className={styles.intro}>{contactForm.intro}</p>
           </div>
@@ -122,6 +124,7 @@ export default function ContactForm() {
               </button>
               <p className={styles.status} role="status">
                 {status === 'sent' && contactForm.sent}
+                {status === 'wait' && contactForm.wait}
                 {status === 'error' && (
                   <>
                     {contactForm.error} <a href={`tel:${footer.contact.phone.replace(/\s/g, '')}`}>{footer.contact.phone}</a>.

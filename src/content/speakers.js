@@ -1,5 +1,5 @@
 // Speaker cards. To add a speaker: drop a 682×727 WebP into
-// src/assets/images/speakers/ named after `id`, then add an entry here.
+// src/assets/images/speakers/ named `<id>-otg-design-summit-kolkata.webp`, then add an entry here.
 // `bio` shows on the back of the card (the last paragraph is set in bold);
 // social links live in config/links.js under SPEAKER_LINKS[id].
 
@@ -11,7 +11,7 @@ export const speakers = {
       id: 'paul-sandip',
       name: ['Paul', 'Sandip'],
       roles: ['Author of I Didn’t Say It!', '2x Red Dot Award-winner', 'Industrial Designer'],
-      alt: 'Paul Sandip in a black T-shirt, holding a copy of his book “i didn’t say it!”',
+      alt: 'Paul Sandip, speaker at OTG Design Summit Kolkata 2026, holding a copy of his book “i didn’t say it!”',
       bio: [
         'A two-time Red Dot Award-winning industrial designer, Paul Sandip has engineered over 1,000 commercial products for global brands.',
         'His core philosophy, “Innovation by Observation,” drives both PAUL STUDIO’s success and his best-selling book series, “i didn’t say it!”.',
@@ -22,7 +22,7 @@ export const speakers = {
       id: 'indroneel-mukherjee',
       name: ['Indroneel', 'Mukherjee'],
       roles: ['Fashion Designer', 'Influencer', 'Pageant Coach'],
-      alt: 'Indroneel Mukherjee in a sequinned black outfit and statement earrings',
+      alt: 'Indroneel Mukherjee, speaker at OTG Design Summit Kolkata 2026, in a sequinned black outfit',
       bio: [
         'Indroneel Mukherjee has spent his career proving that visual identity is a tool for commercial leverage.',
         'As a leading designer, influencer, and core mentor for premier platforms like FFACE and Indie Royal, he has shaped East India’s fashion ecosystem and launched countless careers in entertainment.',
@@ -33,7 +33,7 @@ export const speakers = {
       id: 'charbak-dipta',
       name: ['Charbak', 'Dipta'],
       roles: ['Author of Lublu Comics', 'Eisner Nominated Graphic Novelist'],
-      alt: 'Charbak Dipta in clear-framed glasses and a grey T-shirt',
+      alt: 'Charbak Dipta, speaker at OTG Design Summit Kolkata 2026, in clear-framed glasses',
       bio: [
         'An Oxford alumnus and Eisner-nominated graphic novelist, Charbak Dipta proves that independent illustration is a globally scalable asset.',
         'Having published over 60 books across India and the US, he bypassed traditional gatekeepers to build a commercial IP with his award-nominated work, The World of Lublu, and his own retail brand.',
@@ -44,7 +44,7 @@ export const speakers = {
       id: 'anindya-bhanja-chowdhury',
       name: ['Anindya', 'Bhanja', 'Chowdhury'],
       roles: ['IxDF Country Manager', 'Vice President of ADI', 'UI/UX and Product Designer'],
-      alt: 'Anindya Bhanja Chowdhury in dark-framed glasses and a black polo shirt',
+      alt: 'Anindya Bhanja Chowdhury, speaker at OTG Design Summit Kolkata 2026, in dark-framed glasses',
       bio: [
         'Anindya Bhanja Chowdhury is the Country Manager of IxDF and Vice President of ADI.',
         'With over 20 years of global industry experience, he is a highly accomplished Product Manager specializing in UI/UX design, project management, and client strategy.',

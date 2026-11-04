@@ -25,6 +25,7 @@ export default function Hero() {
         </motion.p>
 
         <h1 className={styles.title}>
+          <span className="visually-hidden">{hero.eventName} </span>
           {words.map((w, i) => (
             <span key={i}>
               <span className={styles.wordMask}>

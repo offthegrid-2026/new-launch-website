@@ -33,7 +33,7 @@ export default function Venue() {
             <img src={glows} alt="" className={styles.glows} width="1366" height="569" loading="lazy" />
             <img
               src={building}
-              alt="New Town Convention Centre (Biswa Bangla Convention Centre)"
+              alt="New Town Convention Centre (Biswa Bangla Convention Centre), Kolkata, venue of the OTG Design Summit 2026"
               className={styles.building}
               width="577"
               height="308"

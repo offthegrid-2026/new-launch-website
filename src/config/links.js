@@ -1,8 +1,9 @@
 // Every outbound / CTA destination on the site lives here.
 // Values starting with '#' are in-page anchors used until the real page exists.
 
-// the passes' Buy buttons
-export const REGISTER_URL = '/register'
+// the passes' Buy buttons: the application form (register/index.html), told the pass by ?pass=<id>
+export const REGISTER_URL = '/register/'
+export const registerHref = (passId) => `${REGISTER_URL}?pass=${passId}`
 
 // Apply for Delegate Pass: the passes section on the home page
 export const PASSES_URL = '#passes'

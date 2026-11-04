@@ -1,33 +1,62 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { REGISTER_URL, enquiryHref } from '../../config/links'
+import { registerHref, enquiryHref } from '../../config/links'
+import { passPhase, SOLD_OUT_LABEL } from '../../content/passes'
+import usePassStatus from '../../hooks/usePassStatus'
 import styles from './PassCard.module.css'
 
-/** True once the CTA's `opens` moment has passed; flips by itself if the page is open at that moment. */
-function useOpen(opens) {
-  const at = opens ? Date.parse(opens.at) : 0
-  const [open, setOpen] = useState(() => Date.now() >= at)
+/** The pass's phase (see passPhase); flips by itself if the page is open at an `opens` or `closes` moment. */
+function usePhase(pass) {
+  const [phase, setPhase] = useState(() => passPhase(pass))
 
   useEffect(() => {
-    if (open) return
-    const wait = at - Date.now()
+    const next = { soon: pass.cta.opens, open: pass.cta.closes }[phase]
+    if (!next) return
+    const wait = Date.parse(next.at) - Date.now()
     if (wait > 2 ** 31 - 1) return // beyond setTimeout's range; a reload will pick it up
-    const timer = setTimeout(() => setOpen(true), Math.max(wait, 0))
+    const timer = setTimeout(() => setPhase(passPhase(pass)), Math.max(wait, 0))
     return () => clearTimeout(timer)
-  }, [at, open])
+  }, [pass, phase])
 
-  return open
+  return phase
 }
 
-/** The bar under the card art: CTA (or status), accent dot, flip button. */
-function Bar({ pass, open, children }) {
+/**
+ * Red band across the top-right corner, its text scrolling slowly and endlessly (still under
+ * reduced motion). Ported from the ticket store's PassCard (store/otg-app). The text repeats to
+ * overfill the band, twice over, so the -50% scroll loops without a seam; only the first copy is read out.
+ */
+function Ribbon({ children }) {
+  const run = (hidden) => (
+    <span className={styles.ribbonRun} aria-hidden={hidden || undefined}>
+      {Array.from({ length: 4 }, (_, i) => (
+        <span key={i} aria-hidden={i > 0 || undefined}>
+          {children}
+        </span>
+      ))}
+    </span>
+  )
+  return (
+    <p className={styles.ribbon}>
+      <span className={styles.ribbonText}>
+        {run(false)}
+        {run(true)}
+      </span>
+    </p>
+  )
+}
+
+/** The bar under the card art: CTA (or status), accent dot, spots left (capped passes on sale), flip button. */
+function Bar({ pass, phase, left, children }) {
   return (
     <div className={styles.bar}>
-      {!open ? (
-        <span className={styles.cta}>{pass.cta.opens.label}</span>
+      {phase !== 'open' ? (
+        <span className={styles.cta} data-phase={phase}>
+          {{ soon: pass.cta.opens?.label, closed: pass.cta.closes?.label, soldOut: SOLD_OUT_LABEL }[phase]}
+        </span>
       ) : pass.cta.buy || pass.cta.enquiry ? (
         <a
-          href={pass.cta.enquiry ? enquiryHref(pass.cta.enquiry) : REGISTER_URL}
+          href={pass.cta.enquiry ? enquiryHref(pass.cta.enquiry) : registerHref(pass.id)}
           data-enquiry={pass.cta.enquiry}
           className={styles.cta}
         >
@@ -38,6 +67,11 @@ function Bar({ pass, open, children }) {
         <span className={styles.cta}>{pass.cta.label}</span>
       )}
       <span className={styles.dot} aria-hidden="true" />
+      {phase === 'open' && left != null && (
+        <span className={styles.left}>
+          {left} left<span className="visually-hidden"> for {pass.name}</span>
+        </span>
+      )}
       {children}
     </div>
   )
@@ -54,7 +88,15 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
   const backButton = useRef(null)
   const userFlipped = useRef(false)
   const backId = `pass-${pass.id}-inclusions`
-  const open = useOpen(pass.cta.opens)
+  const timed = usePhase(pass)
+  const status = usePassStatus()
+  const phase = timed === 'open' && status?.soldOut.includes(pass.name) ? 'soldOut' : timed
+  const left = status?.remaining[pass.name]
+  // as in the store, a sold-out pass and one whose sale has ended look the same to a buyer:
+  // grey art and accent, and a red "Sold out" band (the filter is on the art, so the band stays red)
+  const unavailable = phase === 'soldOut' || phase === 'closed'
+  const ribbon = unavailable && <Ribbon>{SOLD_OUT_LABEL}</Ribbon>
+  const artClass = `${styles.art} ${unavailable ? styles.dim : ''}`
 
   useEffect(() => {
     if (!userFlipped.current) return
@@ -70,7 +112,7 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
     <motion.article
       className={styles.card}
       data-flipped={flipped}
-      style={{ '--dot': pass.dot }}
+      style={{ '--dot': unavailable ? '#6b6b70' : pass.dot }}
       aria-labelledby={`pass-${pass.id}-name`}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -83,9 +125,10 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
 
       <div className={styles.inner}>
         <div className={`${styles.face} ${styles.front}`} inert={flipped} aria-hidden={flipped || undefined}>
-          <img src={front} alt="" width="720" height="1067" loading="lazy" decoding="async" className={styles.art} />
+          {ribbon}
+          <img src={front} alt="" width="720" height="1067" loading="lazy" decoding="async" className={artClass} />
           <p className="visually-hidden">{pass.summary}</p>
-          <Bar pass={pass} open={open}>
+          <Bar pass={pass} phase={phase} left={left}>
             <button ref={frontButton} type="button" className={styles.flip} aria-expanded={flipped} aria-controls={backId} onClick={toggle}>
               View inclusions
             </button>
@@ -93,7 +136,8 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
         </div>
 
         <div id={backId} className={`${styles.face} ${styles.back}`} inert={!flipped} aria-hidden={!flipped || undefined}>
-          <img src={back} alt="" width="720" height="1067" loading="lazy" decoding="async" className={styles.art} />
+          {ribbon}
+          <img src={back} alt="" width="720" height="1067" loading="lazy" decoding="async" className={artClass} />
           <div className="visually-hidden">
             <h4>{pass.name} includes</h4>
             {pass.inclusions.map((group) => (
@@ -109,7 +153,7 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
               </div>
             ))}
           </div>
-          <Bar pass={pass} open={open}>
+          <Bar pass={pass} phase={phase} left={left}>
             <button ref={backButton} type="button" className={styles.flip} aria-expanded={flipped} aria-controls={backId} onClick={toggle}>
               <span aria-hidden="true">← </span>Back to pass
             </button>
