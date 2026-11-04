@@ -50,7 +50,9 @@ export async function passStatus() {
 async function callScript(script, params) {
   const url = process.env[script]
   const { FORM_SECRET } = process.env
-  if (!url || !FORM_SECRET) return reply(500, { ok: false, error: 'Form is not configured' })
+  // names the missing variable (never its value), so a misconfigured deployment says what to fix
+  const missing = [!url && script, !FORM_SECRET && 'FORM_SECRET'].filter(Boolean)
+  if (missing.length) return reply(500, { ok: false, error: `Form is not configured: ${missing.join(', ')} not set` })
   params.set('secret', FORM_SECRET)
 
   try {
