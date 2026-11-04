@@ -181,6 +181,8 @@ export const contactForm = {
   submit: 'Submit Message',
   sending: 'Sending…',
   sent: 'Thank you, your query has been submitted. A confirmation is on its way to your inbox.',
+  // the script's spam limit: same email within 5 minutes, or same connection within 1 minute
+  wait: 'A message was just sent from here. Please wait a few minutes before sending another.',
   error: 'Something went wrong sending your message. Please try again, or call us on',
 }
 

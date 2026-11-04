@@ -5,7 +5,7 @@ import { passes, passPhase } from '../content/passes'
 import { footer } from '../content/site'
 import { PASSES_URL } from '../config/links'
 import useSmoothScroll from '../hooks/useSmoothScroll'
-import useSoldOut from '../hooks/useSoldOut'
+import usePassStatus from '../hooks/usePassStatus'
 import eventPhoto from '../assets/images/hero/layer0.webp'
 import GridBackdrop from '../components/GridBackdrop/GridBackdrop'
 import Container from '../components/Container/Container'
@@ -77,10 +77,12 @@ function Field({ label, required, wide, children }) {
 export default function RegisterPage() {
   useSmoothScroll()
   // null until the site has heard which passes are sold out; the page waits for it
-  const soldOut = useSoldOut()
+  const passStatus = usePassStatus()
+  const soldOut = passStatus?.soldOut
   const choice = useMemo(() => soldOut && choosePass(soldOut), [soldOut])
   const pass = choice?.pass
-  // idle | sending | sent | soldOut | error
+  const left = pass && passStatus.remaining[pass.name]
+  // idle | sending | sent | soldOut | duplicate | wait | error
   const [status, setStatus] = useState('idle')
   // bumped on a successful send to clear the dropdown, which form.reset() can't reach
   const [sends, setSends] = useState(0)
@@ -95,6 +97,9 @@ export default function RegisterPage() {
       const res = await fetch('/api/register', { method: 'POST', body: new URLSearchParams(new FormData(el)) })
       const result = await res.json()
       if (result.soldOut) return setStatus('soldOut')
+      if (result.duplicate) return setStatus('duplicate')
+      // the script's one-minute pause between applications from one connection
+      if (/^Please wait/.test(result.error)) return setStatus('wait')
       if (!res.ok || !result.ok) throw new Error(result.error || res.statusText)
       el.reset()
       setSends((n) => n + 1)
@@ -139,6 +144,7 @@ export default function RegisterPage() {
             {pass && (
               <p className={styles.pass} style={{ '--dot': pass.dot }}>
                 {register.passLabel} <strong>{pass.name}</strong>
+                {left != null && <span className={styles.left}> · {left} {register.spotsLeft}</span>}
               </p>
             )}
           </Container>
@@ -256,6 +262,8 @@ export default function RegisterPage() {
                   <p className={form.status} role="status">
                     {status === 'sent' && register.sent}
                     {status === 'soldOut' && register.soldOutOnSend}
+                    {status === 'duplicate' && register.duplicate}
+                    {status === 'wait' && register.wait}
                     {status === 'error' && (
                       <>
                         {register.error}{' '}

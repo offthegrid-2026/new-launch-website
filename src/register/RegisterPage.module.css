@@ -27,6 +27,10 @@
   background: var(--dot);
 }
 
+.left {
+  color: var(--text-muted);
+}
+
 .pass strong {
   font-weight: 600;
   color: var(--white);

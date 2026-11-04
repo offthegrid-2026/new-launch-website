@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { registerHref, enquiryHref } from '../../config/links'
 import { passPhase, SOLD_OUT_LABEL } from '../../content/passes'
-import useSoldOut from '../../hooks/useSoldOut'
+import usePassStatus from '../../hooks/usePassStatus'
 import styles from './PassCard.module.css'
 
 /** The pass's phase (see passPhase); flips by itself if the page is open at an `opens` or `closes` moment. */
@@ -46,8 +46,8 @@ function Ribbon({ children }) {
   )
 }
 
-/** The bar under the card art: CTA (or status), accent dot, flip button. */
-function Bar({ pass, phase, children }) {
+/** The bar under the card art: CTA (or status), accent dot, spots left (capped passes on sale), flip button. */
+function Bar({ pass, phase, left, children }) {
   return (
     <div className={styles.bar}>
       {phase !== 'open' ? (
@@ -67,6 +67,11 @@ function Bar({ pass, phase, children }) {
         <span className={styles.cta}>{pass.cta.label}</span>
       )}
       <span className={styles.dot} aria-hidden="true" />
+      {phase === 'open' && left != null && (
+        <span className={styles.left}>
+          {left} left<span className="visually-hidden"> for {pass.name}</span>
+        </span>
+      )}
       {children}
     </div>
   )
@@ -84,8 +89,9 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
   const userFlipped = useRef(false)
   const backId = `pass-${pass.id}-inclusions`
   const timed = usePhase(pass)
-  const soldOut = useSoldOut()
-  const phase = timed === 'open' && soldOut?.includes(pass.name) ? 'soldOut' : timed
+  const status = usePassStatus()
+  const phase = timed === 'open' && status?.soldOut.includes(pass.name) ? 'soldOut' : timed
+  const left = status?.remaining[pass.name]
   // as in the store, a sold-out pass and one whose sale has ended look the same to a buyer:
   // grey art and accent, and a red "Sold out" band (the filter is on the art, so the band stays red)
   const unavailable = phase === 'soldOut' || phase === 'closed'
@@ -122,7 +128,7 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
           {ribbon}
           <img src={front} alt="" width="720" height="1067" loading="lazy" decoding="async" className={artClass} />
           <p className="visually-hidden">{pass.summary}</p>
-          <Bar pass={pass} phase={phase}>
+          <Bar pass={pass} phase={phase} left={left}>
             <button ref={frontButton} type="button" className={styles.flip} aria-expanded={flipped} aria-controls={backId} onClick={toggle}>
               View inclusions
             </button>
@@ -147,7 +153,7 @@ export default function PassCard({ pass, front, back, delay = 0 }) {
               </div>
             ))}
           </div>
-          <Bar pass={pass} phase={phase}>
+          <Bar pass={pass} phase={phase} left={left}>
             <button ref={backButton} type="button" className={styles.flip} aria-expanded={flipped} aria-controls={backId} onClick={toggle}>
               <span aria-hidden="true">← </span>Back to pass
             </button>

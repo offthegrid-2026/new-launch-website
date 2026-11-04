@@ -26,7 +26,7 @@ function Field({ label, required, wide, children }) {
 
 /** Split card after temp/form-design-sample.png: event photo panel on the left, form on the right. */
 export default function ContactForm() {
-  // idle | sending | sent | mail | error
+  // idle | sending | sent | wait | error
   const [status, setStatus] = useState('idle')
   const select = useRef(null)
 
@@ -63,6 +63,8 @@ export default function ContactForm() {
       // url-encoded so the Apps Script web app reads it as e.parameter (it doesn't parse multipart)
       const res = await fetch(CONTACT_FORM.endpoint, { method: 'POST', body: new URLSearchParams(data) })
       const result = await res.json()
+      // the script's spam limit (same email within 5 min, same connection within 1 min)
+      if (/^Please wait/.test(result.error)) return setStatus('wait')
       if (!res.ok || !result.ok) throw new Error(result.error || res.statusText)
       form.reset()
       setStatus('sent')
@@ -122,6 +124,7 @@ export default function ContactForm() {
               </button>
               <p className={styles.status} role="status">
                 {status === 'sent' && contactForm.sent}
+                {status === 'wait' && contactForm.wait}
                 {status === 'error' && (
                   <>
                     {contactForm.error} <a href={`tel:${footer.contact.phone.replace(/\s/g, '')}`}>{footer.contact.phone}</a>.

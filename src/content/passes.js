@@ -5,7 +5,7 @@
 // `opens` holds a buy button back until a moment (IST), showing its label until then;
 // `closes` ends the sale at a moment, showing its label from then on.
 // A pass can also sell out early: the cap lives in the Apps Script (CAPS in scripts/application-form.gs),
-// and the card shows SOLD_OUT_LABEL once the script reports it full (hooks/useSoldOut.js).
+// and the card shows SOLD_OUT_LABEL once the script reports it full (hooks/usePassStatus.js), with the spots left until then.
 // All buy passes share one application form, and one Sheet with a "Pass Tier" column.
 
 const OTG_EXPERIENCE = [

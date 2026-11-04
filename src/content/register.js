@@ -7,12 +7,17 @@ export const register = {
   title: 'Claim your seat',
   intro: 'Tell us who you are and what you’re building. Every application is reviewed by the OTG team.',
   passLabel: 'Applying for',
+  spotsLeft: 'spots left', // after the pass name, on passes with a cap
   // when no pass is on sale: after a sale ends, or once The First sells out before The Many opens.
   // Reads "The First is sold out." or the closed line, then "Next up: The Many, opens 16 Nov."
   soldOut: 'is sold out.',
   closed: 'Applications are closed right now.',
   nextUp: 'Next up:',
   closedLink: 'View passes',
+  // one application per person: this email or mobile number is already in the Sheet
+  duplicate: 'You’ve already applied with this email or mobile number. We’ll be in touch after review.',
+  // the script's pause between applications from one connection (1 minute)
+  wait: 'An application was just sent from this connection. Please wait a minute and try again.',
   // the pass filled up between loading the page and sending
   soldOutOnSend: 'Sorry, this pass sold out just before your application arrived. Reload the page to see what’s open now.',
 

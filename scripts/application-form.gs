@@ -7,7 +7,11 @@
  * No emails are sent: the Sheet is the only record.
  *
  * It also caps passes (CAPS below): once a pass has that many rows it refuses further
- * applications for it, and tells the site, which then shows the pass as "Sold out".
+ * applications for it. The site asks how many are left, to show "N spots left" and "Sold out".
+ *
+ * One application per person: an email or mobile number already in the Sheet is refused, whatever
+ * the pass (delete their row to let them apply again). Visitors aren't limited by IP beyond a
+ * one-minute pause, since a college or office wifi puts many applicants behind one IP.
  *
  * Setup:
  *   1. Create a Google Sheet, e.g. "OTG Design Summit 2026 – Pass Applications".
@@ -24,8 +28,8 @@
  * After editing this script: Deploy -> Manage deployments -> Edit (pencil) -> Version: New version.
  * Otherwise the /exec URL keeps running the old code.
  *
- * Rows are written by column position, not by header name: add columns only after the last one,
- * and keep Pass Tier in column B (the cap counts it).
+ * Rows are written and read by column position, not by header name: add columns only after the
+ * last one, and don't reorder them (the cap counts Pass Tier; the one-per-person check reads Email and Mobile).
  */
 
 // order of the Sheet columns; keys match the form's input names
@@ -62,9 +66,8 @@ const CATEGORIES = [
 
 const MAX_LENGTH = { name: 80, email: 120, phone: 30, company: 120, jobTitle: 120, linkedin: 300, work: 300, why: 2000 }
 
-// abuse limits
-const EMAIL_COOLDOWN = 5 * 60 // seconds before the same address can apply again
-const IP_COOLDOWN = 60 // seconds between applications from one visitor
+// abuse limit: seconds between applications from one IP, to slow a bot down
+const IP_COOLDOWN = 60
 
 function doPost(e) {
   try {
@@ -74,18 +77,15 @@ function doPost(e) {
     const secret = PropertiesService.getScriptProperties().getProperty('FORM_SECRET')
     if (!secret || p.secret !== secret) return json({ ok: false, error: 'Forbidden' })
 
-    // the site asking which passes are full (api/register.js GET)
-    if (p.action === 'status') return json({ ok: true, soldOut: soldOutPasses() })
+    // the site asking how many applications each capped pass has left (api/register.js GET)
+    if (p.action === 'status') return json({ ok: true, ...passStatus(readRows()) })
 
     const problem = validate(p)
     if (problem) return json({ ok: false, error: problem })
 
     const cache = CacheService.getScriptCache()
-    const emailKey = `email:${p.email.toLowerCase()}`
     const ipKey = p.ip ? `ip:${p.ip}` : null
-    if (cache.get(emailKey) || (ipKey && cache.get(ipKey))) {
-      return json({ ok: false, error: 'Please wait a few minutes before applying again' })
-    }
+    if (ipKey && cache.get(ipKey)) return json({ ok: false, error: 'Please wait a minute before applying again' })
 
     p.submitted = Utilities.formatDate(new Date(), 'Asia/Kolkata', 'dd MMM yyyy, hh:mm a')
 
@@ -93,7 +93,13 @@ function doPost(e) {
     const lock = LockService.getScriptLock()
     lock.waitLock(10000)
     try {
-      if (soldOutPasses().includes(p.pass)) return json({ ok: false, soldOut: true, error: `${p.pass} is sold out` })
+      const rows = readRows()
+      if (passStatus(rows).soldOut.includes(p.pass)) return json({ ok: false, soldOut: true, error: `${p.pass} is sold out` })
+      const email = p.email.toLowerCase()
+      const phone = digits(p.phone)
+      if (rows.some((r) => String(r.email).toLowerCase() === email || digits(r.phone) === phone)) {
+        return json({ ok: false, duplicate: true, error: 'Already applied with this email or mobile number' })
+      }
       const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0]
       if (sheet.getLastRow() === 0) sheet.appendRow(COLUMNS.map(([label]) => label))
       // a leading = + - @ would make Sheets read the answer as a formula
@@ -102,7 +108,6 @@ function doPost(e) {
       lock.releaseLock()
     }
 
-    cache.put(emailKey, '1', EMAIL_COOLDOWN)
     if (ipKey) cache.put(ipKey, '1', IP_COOLDOWN)
     return json({ ok: true })
   } catch (err) {
@@ -110,15 +115,27 @@ function doPost(e) {
   }
 }
 
-/** The capped passes (CAPS) whose rows have reached the cap. */
-function soldOutPasses() {
+/** Every application in the Sheet, as { pass, email, phone, ... } keyed like COLUMNS. */
+function readRows() {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0]
-  const rows = sheet.getLastRow() - 1 // minus the header
-  if (rows < 1) return []
-  const col = COLUMNS.findIndex(([, key]) => key === 'pass') + 1
-  const counts = {}
-  for (const [name] of sheet.getRange(2, col, rows, 1).getValues()) counts[name] = (counts[name] || 0) + 1
-  return Object.keys(CAPS).filter((name) => (counts[name] || 0) >= CAPS[name])
+  const count = sheet.getLastRow() - 1 // minus the header
+  if (count < 1) return []
+  return sheet
+    .getRange(2, 1, count, COLUMNS.length)
+    .getValues()
+    .map((values) => Object.fromEntries(COLUMNS.map(([, key], i) => [key, values[i]])))
+}
+
+/** For each capped pass (CAPS): applications left, and which are sold out. */
+function passStatus(rows) {
+  const remaining = {}
+  for (const name in CAPS) remaining[name] = Math.max(0, CAPS[name] - rows.filter((r) => r.pass === name).length)
+  return { remaining, soldOut: Object.keys(remaining).filter((name) => remaining[name] === 0) }
+}
+
+/** A phone number's last 10 digits, so "+91 98765 43210" and "9876543210" match. */
+function digits(phone) {
+  return String(phone).replace(/\D/g, '').slice(-10)
 }
 
 /** Returns what's wrong with an application, or '' when it's fine. Trims fields in place.
