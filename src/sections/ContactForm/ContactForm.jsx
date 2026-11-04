@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { contactForm, footer } from '../../content/site'
 import { CONTACT_FORM } from '../../config/links'
-import eventPhoto from '../../assets/images/contact/photo.webp'
+import eventPhoto from '../../assets/images/contact/otg-design-summit-kolkata-stage.webp'
 import Container from '../../components/Container/Container'
 import Glow from '../../components/Glow/Glow'
 import Reveal from '../../components/Reveal/Reveal'
@@ -79,7 +79,7 @@ export default function ContactForm() {
 
         <Reveal as="form" className={styles.card} onSubmit={onSubmit} amount={0.15}>
           <div className={styles.panel}>
-            <img src={eventPhoto} alt="" className={styles.photo} width="800" height="1071" loading="lazy" />
+            <img src={eventPhoto} alt="A panel on the Off The Grid Design Summit stage in Kolkata, in front of a packed audience" className={styles.photo} width="800" height="1071" loading="lazy" />
             <h3 className={styles.heading}>{contactForm.heading}</h3>
             <p className={styles.intro}>{contactForm.intro}</p>
           </div>

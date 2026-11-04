@@ -24,6 +24,8 @@ export const ctas = {
 export const hero = {
   date: '12th December, 2026',
   city: 'Kolkata',
+  // read before the title by screen readers and search engines, not shown
+  eventName: 'OTG Design Summit Kolkata 2026:',
   title: 'East India’s biggest Design Summit is Here.',
   subtitle:
     "Converging elite designers, studio founders, and enterprise brands to push Bengal's creative economy forward.",
@@ -151,9 +153,9 @@ export const venue = {
   from: 'mins from',
   landmark: 'Salt Lake Sector V Metro',
   photos: [
-    { id: 'building', alt: 'New Town Convention Centre seen from the street, with its cantilevered roof' },
-    { id: 'map', alt: 'Map of New Town showing the Convention Centre near New Town Road', map: true },
-    { id: 'gate', alt: 'The Biswa Bangla Gate arch lit up at dusk over New Town traffic' },
+    { id: 'new-town-convention-centre-kolkata', alt: 'New Town Convention Centre, venue of the OTG Design Summit in Kolkata, seen from the street' },
+    { id: 'new-town-kolkata-map', alt: 'Map of New Town, Kolkata showing the Convention Centre near New Town Road', map: true },
+    { id: 'biswa-bangla-gate-kolkata', alt: 'The Biswa Bangla Gate arch in New Town, Kolkata, lit up at dusk' },
   ],
 }
 

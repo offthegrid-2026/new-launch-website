@@ -26,11 +26,11 @@ async function main() {
   // speaker photos (the top of each speaker card)
   const speakers = { 'paul-sandip': 266, 'indroneel-mukherjee': 1025, 'charbak-dipta': 1783 }
   for (const [name, left] of Object.entries(speakers)) {
-    await crop(MAIN, { left, top: 5961, width: 682, height: 727 }).webp({ quality: 78 }).toFile(`${OUT}/speakers/${name}.webp`)
+    await crop(MAIN, { left, top: 5961, width: 682, height: 727 }).webp({ quality: 78 }).toFile(`${OUT}/speakers/${name}-otg-design-summit-kolkata.webp`)
   }
 
   // venue photo strip
-  const venue = { building: 186, map: 1000, gate: 1814 }
+  const venue = { 'new-town-convention-centre-kolkata': 186, 'new-town-kolkata-map': 1000, 'biswa-bangla-gate-kolkata': 1814 }
   for (const [name, left] of Object.entries(venue)) {
     await crop(MAIN, { left, top: 16420, width: 728, height: 878 }).resize(640).webp({ quality: 76 }).toFile(`${OUT}/venue/${name}.webp`)
   }
