@@ -40,5 +40,16 @@ export const speakers = {
         'At Off The Grid 2026, Charbak decodes how to turn indie visual storytelling into a highly profitable, internationally recognized enterprise.',
       ],
     },
+    {
+      id: 'anindya-bhanja-chowdhury',
+      name: ['Anindya', 'Bhanja', 'Chowdhury'],
+      roles: ['IxDF Country Manager', 'Vice President of ADI', 'UI/UX and Product Designer'],
+      alt: 'Anindya Bhanja Chowdhury in dark-framed glasses and a black polo shirt',
+      bio: [
+        'Anindya Bhanja Chowdhury is the Country Manager of IxDF and Vice President of ADI.',
+        'With over 20 years of global industry experience, he is a highly accomplished Product Manager specializing in UI/UX design, project management, and client strategy.',
+        'At Off The Grid 2026, Anindya decodes how to bridge intuitive UI/UX design with strategic project management to scale digital products for a global clientele.',
+      ],
+    },
   ],
 }
