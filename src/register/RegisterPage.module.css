@@ -1,0 +1,202 @@
+/*
+ * Pass application (/register/). The banner comes from the legal pages and the fields from the
+ * Reach out form (both imported as modules); this file adds the single-column card, the pass
+ * tag and the category dropdown.
+ */
+
+.pass {
+  margin-top: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 40px;
+  padding: 0.4em 1.1em;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  color: var(--text-soft);
+}
+
+/* the pass's accent colour, as on its card */
+.pass::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot);
+}
+
+.pass strong {
+  font-weight: 600;
+  color: var(--white);
+}
+
+.body {
+  max-width: 880px;
+  padding-bottom: var(--section-gap);
+}
+
+/* one column: the Reach out card it borrows from splits in two at 960px */
+.body .card {
+  margin-top: 0;
+  grid-template-columns: 1fr;
+}
+
+.closed {
+  padding: clamp(24px, 1rem + 2.5vw, 64px);
+  justify-items: center;
+  gap: 20px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.closed a {
+  display: grid;
+  place-items: center;
+  max-width: 320px;
+}
+
+.muted {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* ---------- category dropdown (MultiSelect.jsx), styled like the form's select ---------- */
+.multi {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.multiLabel {
+  font-family: var(--font-ui);
+  font-size: var(--step--1);
+  font-weight: 500;
+  color: var(--white);
+}
+
+.required {
+  color: var(--orange);
+}
+
+.trigger {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 40px 12px 14px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  text-align: left;
+  font-size: max(16px, var(--step--1));
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E")
+      right 14px center / 12px 8px no-repeat,
+    #1b1b1e;
+  transition:
+    border-color 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+}
+
+.trigger:hover {
+  background-color: #212125;
+}
+
+.trigger:focus-visible,
+.trigger[aria-expanded='true'] {
+  outline: none;
+  border-color: var(--purple);
+  background-color: #1f1b26;
+  box-shadow: 0 0 0 3px rgba(203, 108, 230, 0.2);
+}
+
+.placeholder {
+  color: #77767d;
+}
+
+.value {
+  color: var(--white);
+}
+
+/* carries `required`; sits under the trigger so the browser's "fill this in" bubble points at it */
+.proxy {
+  position: absolute;
+  left: 14px;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: #1b1b1e;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+.search {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #121214;
+  color: var(--white);
+  font: inherit;
+  font-size: max(16px, var(--step--1));
+}
+
+.search:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+
+.search::placeholder {
+  color: #77767d;
+}
+
+.options {
+  margin-top: 6px;
+  max-height: 300px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  line-height: 1.4;
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.option:hover,
+.option:has(:focus-visible) {
+  background: #2a2a2f;
+  color: var(--white);
+}
+
+.option input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--purple);
+}
+
+.empty {
+  padding: 10px;
+  color: var(--text-muted);
+}

@@ -15,6 +15,7 @@
 }
 
 .face {
+  position: relative;
   grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
@@ -29,6 +30,56 @@
 
 .back {
   transform: rotateY(180deg);
+}
+
+/* sold out or sale ended */
+.dim {
+  filter: grayscale(1) brightness(0.75);
+}
+
+/* ---------- "Sold out" ribbon, from the ticket store's PassCard (store/otg-app) ---------- */
+.ribbon {
+  position: absolute;
+  top: 52px;
+  right: -104px;
+  z-index: 1;
+  width: 384px;
+  padding-block: 14px;
+  overflow: hidden;
+  transform: rotate(45deg);
+  background: linear-gradient(90deg, #ff5a5f, #e0242e, #9e0f1a);
+  color: var(--white);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.ribbonText {
+  display: flex;
+  width: max-content;
+  font-family: var(--font-ui);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  /* two identical copies scroll left; moving exactly one copy's width loops back seamlessly */
+  animation: ribbon-text 24s linear infinite;
+}
+
+.ribbonRun {
+  display: flex;
+  flex: none;
+}
+
+.ribbonRun > span {
+  padding-inline: 24px;
+  white-space: nowrap;
+}
+
+@keyframes ribbon-text {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .card:hover .face {
@@ -58,6 +109,14 @@
   font-weight: 700;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+.cta[data-phase='soldOut'] {
+  color: #f87171;
+}
+
+.cta[data-phase='closed'] {
+  color: #9ca3af;
 }
 
 a.cta {
@@ -94,6 +153,10 @@ a.cta:hover {
 
 /* no spin: the faces crossfade instead */
 @media (prefers-reduced-motion: reduce) {
+  .ribbonText {
+    animation: none;
+  }
+
   .inner,
   .card[data-flipped='true'] .inner {
     transform: none;
